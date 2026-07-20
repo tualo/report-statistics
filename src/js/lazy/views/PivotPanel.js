@@ -1,14 +1,11 @@
+Ext.getApplication().enableDebugXType();
 Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
     extend: 'Ext.Panel',
     requires: [
         'Tualo.reportStatistics.lazy.controller.PivotPanel',
         'Tualo.reportStatistics.lazy.models.PivotPanel',
-        'Tualo.reportStatistics.lazy.views.RemotePivotGrid'
+        'Tualo.reportStatistics.lazy.views.PivotConfigurator'
     ],
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
 
     alias: 'widget.tualo-reportstatistics-panel',
     controller: 'tualo-reportstatistics-panel',
@@ -28,6 +25,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
     },
 
     updateProxy: function (storeName) {
+        /*
         let vm = this.getViewModel(),
             store = vm.getStore(storeName),
             documentId = vm.get('documentId'),
@@ -36,15 +34,18 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
 
         store.getProxy().setUrl(parts.join('/'));
         store.load()
+        */
     },
 
     applyDocumentId: function (id) {
         Tualo.reportStatistics.Logger.log('PivotPanel: Document ID applied to:', id);
+        /*
         this.getViewModel().set('documentId', id);
         this.updateProxy('values');
         this.updateProxy('left');
         this.updateProxy('top');
         this.updateProxy('filters');
+        */
         return id;
     },
 
@@ -52,6 +53,8 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
 
     applyTablename: function (table) {
         Tualo.reportPivot.Logger.log('PivotPanel: Table Name applied to:', table);
+
+        /*
         this.getViewModel().set('tablename', table);
 
         let vm = this.getViewModel(),
@@ -68,6 +71,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
         store.getProxy().setUrl(parts.join('/'));
         store.load();
         return table;
+        */
 
     },
 
@@ -93,19 +97,8 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
         },
         {
             hidden: true,
-            xtype: 'tualo-reportpivot-remotepivotgrid',
-            itemId: 'pivotgrid',
-            bind: {
-                store: '{aggregate}',
-                values: '{values}',
-                available: '{available}',
-                left: '{left}',
-                top: '{top}'
-            },
-            listeners: {
-                changed: 'onPivotChanged'
-            }
-
+            xtype: 'tualo-reportstatistics-pivotconfigurator',
+            itemId: 'pivotgrid'
 
         }
     ]

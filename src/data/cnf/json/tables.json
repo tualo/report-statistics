@@ -1,0 +1,64 @@
+[
+
+    {
+        "table": "blg_pos_{tabellenzusatz}",
+        "tables": [
+
+        ]
+    },
+    {
+        "table": "blg_hdr_{tabellenzusatz}",
+        "tables": [
+            {
+                "table": "blg_pos_{tabellenzusatz}",
+                "on": "blg_pos_{tabellenzusatz}.beleg = blg_hdr_{tabellenzusatz}.id"
+            }
+        ]
+    },
+    {
+        "table": "blg_{BLGTABELLE}_{tabellenzusatz}",
+        "tables": [
+            {
+                "table": "blg_hdr_{tabellenzusatz}",
+                "on": "blg_hdr_{tabellenzusatz}.id = blg_{BLGTABELLE}_{tabellenzusatz}.id"
+            }
+        ]
+    },
+    {
+        "table": "{DSTABELLE}",
+        "tables": [
+            {
+                "table": "blg_{BLGTABELLE}_{tabellenzusatz}",
+                "on": "{DSTABELLE}.{IDCOLUMN} = blg_{BLGTABELLE}_{tabellenzusatz}.kundennummer and {DSTABELLE}.kostenstelle = blg_{BLGTABELLE}_{tabellenzusatz}.kostenstelle"
+            }
+        ]
+    },
+    {
+        "table": "artikelgruppen",
+        "tables": [
+            {
+                "table": "blg_pos_{tabellenzusatz}",
+                "on": "artikelgruppen.gruppe = blg_pos_{tabellenzusatz}.artikel"
+            }
+        ]
+    },
+    {
+        "table": "warengruppen",
+        "tables": [
+            {
+                "table": "artikelgruppen",
+                "on": "warengruppen.warengruppe= artikelgruppen.warengruppe"
+            }
+        ]
+    },
+    {
+        "table": "blg_config",
+        "tables": [
+            {
+                "table": "blg_pos_{tabellenzusatz}",
+                "on": "blg_config.tabellenzusatz = upper('{tabellenzusatz}')"
+            }
+        ]
+    }
+
+]

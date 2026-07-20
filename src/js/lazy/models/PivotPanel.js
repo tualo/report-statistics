@@ -2,8 +2,8 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotPanel', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.tualo-reportstatistics-panel',
     requires: [
-        'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
-        'Tualo.reportStatistics.lazy.controlls.models.PivotGridFilters'
+        //  'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
+        //  'Tualo.reportStatistics.lazy.controlls.models.PivotGridFilters'
     ],
     data: {
         documentId: null,
@@ -14,10 +14,9 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotPanel', {
     },
     stores: {
 
-
         aggregate: {
             pageSize: 25000,
-            model: 'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
+            // model: 'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
             proxy: {
                 type: 'ajax',
                 actionMethods: {
@@ -37,7 +36,11 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotPanel', {
                     }
                 }
             }
-        },
+        }
+
+
+        /*
+        ,
         available: {
             pageSize: 25000,
             model: 'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
@@ -51,12 +54,7 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotPanel', {
                     destroy: 'DELETE'
                 },
                 timeout: 600000,
-
-                /*
-                bind: {
-                    url: './report-pivot/available/{tablename}',
-                },
-                */
+ 
                 reader: {
                     type: 'json',
                     rootProperty: 'data',
@@ -176,5 +174,6 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotPanel', {
                 load: 'onFiltersLoad'
             }
         },
+        */
     }
 });
