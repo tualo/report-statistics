@@ -1,0 +1,24 @@
+{
+  "name": "tualo/report-statistics",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Thomas Hoffmann",
+      "email": "thomas.hoffmann@tualo.de"
+    }
+  ],
+  "require": {
+    "ramsey/uuid": "~4.9.0"
+  },
+  "minimum-stability": "dev",
+  "autoload": {
+    "psr-4": {
+      "Tualo\\Office\\ReportStatistics\\": "src/"
+    },
+    "files": [
+      "src/functions.php"
+    ]
+  },
+  "version": "1.0.0"
+}
