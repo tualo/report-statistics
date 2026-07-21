@@ -61,7 +61,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
         console.log('setAxisData', axis, data, grid);
         grid.getStore().loadData(data);
     },
-    onAxisChanged: function (grid, type) {
+    aggregateData: function () {
         let queryObject = {};
         queryObject.available = this.down('#pivotgrid-configuration-axes-available').getStore().getData().items.map(function (rec) {
             return rec.data;
@@ -76,29 +76,43 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
             return rec.data;
         });
 
-        if (type) {
-            queryObject.changedType = type;
-        }
-
         if (this.fireEvent('beforeQueryTableparts', queryObject)) {
             console.log('onAxisChanged', queryObject);
             this.getViewModel().getStore('aggregate').load({
                 params: {
-                    // available: JSON.stringify(queryObject.available),
+                    available: JSON.stringify(queryObject.available),
                     columns: JSON.stringify(queryObject.columns),
                     rows: JSON.stringify(queryObject.rows),
-                    values: JSON.stringify(queryObject.values)
+                    values: JSON.stringify(queryObject.values),
+                    dateType: queryObject.dateType,
+                    startDate: queryObject.startDate,
+                    stopDate: queryObject.stopDate,
+                    reportTypes: JSON.stringify(queryObject.reportTypes)
                 }
             });
         }
     },
+    onAxisChanged: function (grid, type) {
+        this.aggregateData();
+
+    },
     layout: 'border',
+
     items: [
         {
             xtype: 'grid',
             itemId: 'pivotgrid-grid',
             region: 'center',
             layout: 'fit',
+            features: [
+                {
+                    "ftype": "summary",
+                    "dock": "bottom"
+                }
+            ],
+            plugins: {
+                gridexporter: true
+            },
             bind: {
                 store: '{aggregate}',
             }

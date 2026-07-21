@@ -143,7 +143,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
     }
 
 
-    public static function fillTemporaryTable($temporaryName, $tz, $columns, $rows, $values, $available): bool
+    public static function fillTemporaryTable(string  $temporaryName, string  $tz, array $columns,  array $rows,  array $values,  array $available, string $dateType, string $startDate, string $stopDate): bool
     {
         $db = App::get('session')->getDB();
         $columnsDefinition = self::getColumnsDefinition();
@@ -151,12 +151,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
         $having_filter = '';
 
-        $startDate = date('Y-m-d', strtotime('-1 year'));
-        $stopDate = date('Y-m-d', strtotime('+1 year'));
-        $datumfeld = 'datum';
-
-        $having_filter = 'blg_hdr_' . $tz . '.' . $datumfeld . '>=\'' . $startDate . '\' and ';
-        $having_filter .= 'blg_hdr_' . $tz . '.' . $datumfeld . '<=\'' . $stopDate . '\' ';
+        $having_filter = 'blg_hdr_' . $tz . '.' . $dateType . '>=\'' . $startDate . '\' and ';
+        $having_filter .= 'blg_hdr_' . $tz . '.' . $dateType . '<=\'' . $stopDate . '\' ';
 
 
         $columnsHash = array();
@@ -439,7 +435,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
         $insert = str_replace('{tabellenzusatz_uc}', strtoupper($tz), $insert);
-        $insert = str_replace('{datumfeld}', $datumfeld, $insert);
+        // $insert = str_replace('{datumfeld}', $datumfeld, $insert);
 
         App::result('temp_fields', $fields);
         App::result('temp_insert', $insert);
@@ -448,7 +444,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
     }
 
 
-    public static function getData(array $columns, array $rows, array $values): array
+    public static function getData(array $available, array $columns, array $rows, array $values, array $reportTypes, string $dateType, string $startDate, string $stopDate): array
     {
         $db = App::get('session')->getDB();
 
@@ -502,7 +498,10 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         }
 
         $temporaryName =  self::createTemporaryTable($columns, $rows, $values);
-        self::fillTemporaryTable($temporaryName, 'br', $columns, $rows, $values, []);
+        for ($i = 0; $i < count($reportTypes); $i++) {
+            $tz = $reportTypes[$i];
+            self::fillTemporaryTable($temporaryName, $tz, $columns, $rows, $values, $available,  $dateType,  $startDate,  $stopDate);
+        }
         $top_sql = 'select  ' . $top_field_list . ' from ' . $temporaryName . ' group by ' . $top_field_list . ' ';
         $top_field_data = $db->direct($top_sql);
         App::result('top_field_data', $top_field_data);
@@ -543,39 +542,39 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $summaryRenderer = '';
                 $txt = 'sum(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                 switch ($v['pivotFunction']) {
-                    case 'Ext.tualo.PivotGridFunctionSum2Digits':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum2Digits':
                         $txt = 'round( sum(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END), 2) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
 
-                    case 'Ext.tualo.PivotGridFunctionSum':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum':
                         $txt = 'round( sum(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END), 5) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
 
-                    case 'Ext.tualo.PivotGridFunctionMax':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMax':
                         $txt = 'max(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'max';
                         $summaryRenderer = 'deValueRenderer';
                         break;
-                    case 'Ext.tualo.PivotGridFunctionMin':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMin':
                         $txt = 'min(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'min';
                         $summaryRenderer = 'deValueRenderer';
                         break;
-                    case 'Ext.tualo.PivotGridFunctionCount':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount':
                         $txt = 'count(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
-                    case 'Ext.tualo.PivotGridFunctionDistinctCount':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionDistinctCount':
                         $txt = 'count(distinct  case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
-                    case 'Ext.tualo.PivotGridFunctionAverage':
+                    case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionAverage':
                         $txt = 'avg(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'avg';
                         $summaryRenderer = 'deValueRenderer';
@@ -708,11 +707,16 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $db = App::get('session')->getDB();
             try {
 
+                $available = json_decode($_POST['available'], true);
                 $columns = json_decode($_POST['columns'], true);
                 $rows = json_decode($_POST['rows'], true);
                 $values = json_decode($_POST['values'], true);
+                $reportTypes = json_decode($_POST['reportTypes'], true);
 
-                $data = self::getData($columns, $rows, $values);
+                $dateType = $_POST['dateType'];
+                $startDate = $_POST['startDate'];
+                $stopDate = $_POST['stopDate'];
+                $data = self::getData($available, $columns, $rows, $values, $reportTypes, $dateType, $startDate, $stopDate);
 
                 App::result('data', $data);
                 App::result('success', true);

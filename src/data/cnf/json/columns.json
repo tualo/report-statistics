@@ -583,22 +583,10 @@
         }
     },
     {
-        "text": "Sync - Kundennummer",
-        "dataIndex": "sync_kundennummer",
-        "table": "{DSTABELLE}",
-        "column": "sync_kundennummer"
-    },
-    {
         "text": "Sortierbereich",
         "dataIndex": "sortbereich",
         "table": "{DSTABELLE}",
         "column": "bereich"
-    },
-    {
-        "text": "Sync - Kostenstelle",
-        "dataIndex": "sync_kostenstelle",
-        "table": "{DSTABELLE}",
-        "column": "sync_kostenstelle"
     },
     {
         "text": "Einheit",

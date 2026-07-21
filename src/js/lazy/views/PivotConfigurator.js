@@ -3,7 +3,8 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
     requires: [
         'Tualo.reportStatistics.lazy.controller.PivotConfigurator',
         'Tualo.reportStatistics.lazy.models.PivotConfigurator',
-        'Tualo.reportStatistics.lazy.controlls.RemotePivotGrid'
+        'Tualo.reportStatistics.lazy.controlls.RemotePivotGrid',
+        'Ext.grid.plugin.Exporter'
     ],
 
     alias: 'widget.tualo-reportstatistics-pivotconfigurator',
@@ -47,79 +48,54 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
         },
         {
             region: 'center',
-            itemId: 'tualo-report-statistics-remote-pivotgrid',
-            xtype: 'tualo-report-statistics-remote-pivotgrid',
+            xtype: 'panel',
+            layout: 'fit',
+            itemId: 'tualo-report-statistics-remote-pivotgrid-frame',
             title: 'Auswertung',
-            listeners: {
-                beforeQueryTableparts: function (queryObject) {
-                    queryObject.__seen_by_tualo_reportstatistics_pivotconfigurator = true;
-                    let reportTypes = [];
-                    this.up('tualo-reportstatistics-pivotconfigurator').getViewModel().getStore('reportTypes').each(function (rec) {
-                        if (rec.get('checked')) {
-                            reportTypes.push(rec.get('tabellenzusatz'));
-                        }
-                    });
-                    if (reportTypes.length == 0) {
-                        this.up('tualo-reportstatistics-pivotconfigurator').getViewModel().getStore('reportTypes').each(function (rec) {
-                            reportTypes.push(rec.get('tabellenzusatz'));
-                        });
-                    }
-                    queryObject.reportTypes = reportTypes;
-                }
-                // this.fireEvent('beforeQueryTableparts', queryObject);
-            },
             tbar: [
                 {
                     xtype: 'label',
                     text: 'Zeitraum: '
                 },
-                this.datetype = Ext.create('Ext.form.field.ComboBox', {
+                {
+                    xtype: 'combobox',
                     queryMode: 'local',
                     displayField: 'name',
                     valueField: 'id',
-                    value: 'buchungsdatum',
-                    // store: this.typestore,
-                    listeners: {
-                        scope: this,
-                        blur: function () {
-                            //this.grid.getStore().loadPage(1);
-                        }
-                    }
-                }),
-                this.startdate = Ext.create('Ext.form.field.Date', {
-                    value: new Date(),
-                    format: 'd.m.Y',
-                    listeners: {
-                        scope: this,
-                        blur: function () {
-                            //this.grid.getStore().loadPage(1);
-                        }
-                    }
-                }),
-                '-',
-                this.stopdate = Ext.create('Ext.form.field.Date', {
-                    value: new Date(),
-                    format: 'd.m.Y',
-                    listeners: {
-                        scope: this,
-                        blur: function () {
+                    bind: {
+                        value: '{datetype}',
+                        store: '{datetypes}'
+                    },
 
-                        }
-                    }
-                }),
+
+                }, {
+                    xtype: 'datefield',
+                    bind: {
+                        value: '{startdate}'
+                    },
+                    format: 'd.m.Y'
+                },
+                '-', {
+                    xtype: 'datefield',
+                    bind: {
+                        value: '{stopdate}'
+                    },
+                    format: 'd.m.Y'
+                },
                 '-',
                 {
-                    scope: this,
                     text: 'Aktualisieren',
-                    handler: function () {
-                        this.aggregateData();
-                        //this.grid.getStore().loadPage(1);
-                    }
+                    handler: 'onUpdate'
                 },
                 '->',
                 {
                     text: 'Excel',
-                    scope: this,
+                    handler: 'exportTo',
+                    cfg: {
+                        type: 'excel07',
+                        ext: 'xlsx'
+                    },
+                    /*
                     handler: function () {
                         Ext.MessageBox.wait('Bitte warten ...');
                         //console.log(11);
@@ -132,8 +108,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                             startdate: this.startdate.getValue(),
                             stopdate: this.stopdate.getValue(),
                             title: (this.vorlageName) ? this.vorlageName : '',
-                            cols: Ext.JSON.encode(cols)/*,
-              data: Ext.JSON.encode(data)*/
+                            cols: Ext.JSON.encode(cols)
                         };
                         Ext.Ajax.request({
                             timeout: 600000,
@@ -153,11 +128,16 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                                 Ext.MessageBox.alert('Fehler', 'Die Anfrage konnte vom Server nicht bearbeitet werden');
                             }
                         });
-                    }
+                    }*/
                 },
                 {
                     text: 'Tab-Stopp-Datei',
-                    scope: this,
+                    handler: 'exportTo',
+                    cfg: {
+                        type: 'tsv',
+                        ext: 'csv'
+                    },
+                    /*
                     handler: function () {
                         Ext.MessageBox.wait('Bitte warten ...');
                         //console.log(11);
@@ -170,8 +150,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                             startdate: this.startdate.getValue(),
                             stopdate: this.stopdate.getValue(),
                             title: (this.vorlageName) ? this.vorlageName : '',
-                            cols: Ext.JSON.encode(cols)/*,
-              data: Ext.JSON.encode(data)*/
+                            cols: Ext.JSON.encode(cols)
                         };
                         Ext.Ajax.request({
                             timeout: 600000,
@@ -192,6 +171,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                             }
                         });
                     }
+                        */
                 },
                 {
                     text: 'Vorlage',
@@ -210,16 +190,17 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                     }
                 }
             ],
-        },
-        /*{
-            region: 'east',
-            collapsible: true,
-            split: true,
-            width: 300,
-            minWidth: 200,
-            maxWidth: 400,
-            xtype: 'panel',
-            title: 'Konfiguration',
-        },*/
+            items: [
+
+                {
+                    itemId: 'tualo-report-statistics-remote-pivotgrid',
+                    xtype: 'tualo-report-statistics-remote-pivotgrid',
+                    title: 'Auswertung',
+                    listeners: {
+                        beforeQueryTableparts: 'beforeQueryTableparts'
+                    }
+                }
+            ]
+        }
     ]
 });
