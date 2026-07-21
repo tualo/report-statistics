@@ -256,17 +256,15 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridAxis', {
     return this.fireEvent('beforedrop', [node, data, overModel, dropPosition, dropHandlers, eOpts]);
   },
   onDropped: function (node, data, dropRec, dropPosition) {
-    //var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+    var dropOn = dropRec ? ' ' + dropPosition + ' ' + dropRec.get('name') : ' on empty view';
+    console.log('Dropped ' + data.records[0].get('text') + dropOn);
     if (this.fireEvent('drop', [node, data, dropRec, dropPosition])) {
       if (this.appendable !== true) {
-        /*
-        console.log(node);
-        console.log(data);
-        console.log(dropRec);
-        */
+        console.log('Appendable is false, so we remove the record from the source store');
       } else {
-        return this.fireEvent('changed', [this]);
+        console.log('Appendable is true, so we keep the record in the source store');
       }
+      return this.fireEvent('changed', [this]);
     } else {
       return false;
     }

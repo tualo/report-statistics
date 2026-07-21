@@ -2,6 +2,7 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
     extend: 'Ext.panel.Panel',
     alias: 'widget.tualo-report-statistics-remote-pivotgrid',
+
     /**
     * @cfg {String} fieldText Title for the field configuration-gird.
     */
@@ -36,9 +37,15 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
     axisConfigPosition: 'east',
 
 
+    controller: 'tualo-report-statistics-remote-pivotgrid',
+    viewModel: {
+        type: 'tualo-report-statistics-remote-pivotgrid'
 
+    },
     requires: [
         'Ext.grid.Panel',
+        'Tualo.reportStatistics.lazy.controller.RemotePivotGrid',
+        'Tualo.reportStatistics.lazy.models.RemotePivotGrid',
         'Tualo.reportStatistics.lazy.model.AxisModel',
         'Tualo.reportStatistics.lazy.controlls.PivotGridAxis',
         'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum',
@@ -54,12 +61,48 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
         console.log('setAxisData', axis, data, grid);
         grid.getStore().loadData(data);
     },
+    onAxisChanged: function (grid, type) {
+        let queryObject = {};
+        queryObject.available = this.down('#pivotgrid-configuration-axes-available').getStore().getData().items.map(function (rec) {
+            return rec.data;
+        });
+        queryObject.columns = this.down('#pivotgrid-configuration-axes-columns').getStore().getData().items.map(function (rec) {
+            return rec.data;
+        });
+        queryObject.rows = this.down('#pivotgrid-configuration-axes-rows').getStore().getData().items.map(function (rec) {
+            return rec.data;
+        });
+        queryObject.values = this.down('#pivotgrid-configuration-axes-values').getStore().getData().items.map(function (rec) {
+            return rec.data;
+        });
+
+        if (type) {
+            queryObject.changedType = type;
+        }
+
+        if (this.fireEvent('beforeQueryTableparts', queryObject)) {
+            console.log('onAxisChanged', queryObject);
+            this.getViewModel().getStore('aggregate').load({
+                params: {
+                    // available: JSON.stringify(queryObject.available),
+                    columns: JSON.stringify(queryObject.columns),
+                    rows: JSON.stringify(queryObject.rows),
+                    values: JSON.stringify(queryObject.values)
+                }
+            });
+        }
+    },
     layout: 'border',
     items: [
         {
             xtype: 'grid',
+            itemId: 'pivotgrid-grid',
             region: 'center',
             layout: 'fit',
+            bind: {
+                store: '{aggregate}',
+            }
+
         }, {
             itemId: 'pivotgrid-configuration',
             layout: {
@@ -97,10 +140,10 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                             showFunction: false,
                             showFilter: true,
                             listeners: {
-
+                                changed: function (grid) {
+                                    this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'available');
+                                },
                                 beforeQueryTableparts: function (queryObject) {
-                                    queryObject.__seen_by_remote_pivot_grid = true;
-                                    console.log('beforeQueryTableparts', queryObject);
                                     this.up('tualo-report-statistics-remote-pivotgrid').fireEvent('beforeQueryTableparts', queryObject);
                                 }
                             },
@@ -142,6 +185,11 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                             text: 'Spalten',
                             showFunction: false,
                             showFilter: true,
+                            listeners: {
+                                changed: function (grid) {
+                                    this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'columns');
+                                },
+                            },
                             store: {
 
                                 type: 'json',
@@ -171,6 +219,11 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                             border: true,
                             showFunction: false,
                             showFilter: true,
+                            listeners: {
+                                changed: function (grid) {
+                                    this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'rows');
+                                },
+                            },
                             store: {
 
                                 type: 'json',
@@ -190,6 +243,11 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                             border: true,
                             showFunction: true,
                             showFilter: false,
+                            listeners: {
+                                changed: function (grid) {
+                                    this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'values');
+                                },
+                            },
                             store: {
 
                                 type: 'json',

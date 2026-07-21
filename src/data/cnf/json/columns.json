@@ -13,9 +13,9 @@
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "tabellenzusatz",
         "filterList": {
-           "table": "(select tabellenzusatz from blg_config) xzy",
-           "valueColumn": "tabellenzusatz"
-       }
+            "table": "(select tabellenzusatz from blg_config) xzy",
+            "valueColumn": "tabellenzusatz"
+        }
     },
     {
         "text": "Summenhilfe",
@@ -26,9 +26,9 @@
         "align": "right",
         "pivotFunction": "Ext.tualo.PivotGridFunctionCount",
         "filterList": {
-          "table": "(select count(*) cnt  from (select max(id) c from blg_config) abc) xzy",
-          "valueColumn": "cnt"
-       }
+            "table": "(select count(*) cnt  from (select max(id) c from blg_config) abc) xzy",
+            "valueColumn": "cnt"
+        }
     },
     {
         "text": "Zeit",
@@ -44,9 +44,9 @@
         "align": "right",
         "pivotFunction": "Ext.tualo.PivotGridFunctionCount",
         "filterList": {
-           "table": "(select id from blg_hdr_{tabellenzusatz}) xzy",
-           "valueColumn": "id"
-       }
+            "table": "(select id from blg_hdr_{tabellenzusatz}) xzy",
+            "valueColumn": "id"
+        }
     },
     {
         "text": "Belegmonat",
@@ -62,9 +62,9 @@
         "column": "datum",
         "func": "substring({#},1,4)",
         "filterList": {
-           "table": "(select substr(datum,1,4) v from blg_hdr_{tabellenzusatz}) xzy",
-           "valueColumn": "v"
-       }
+            "table": "(select substr(datum,1,4) v from blg_hdr_{tabellenzusatz}) xzy",
+            "valueColumn": "v"
+        }
     },
     {
         "text": "Buchungsmonat",
@@ -88,7 +88,7 @@
         "type": "date",
         "align": "left",
         "phprenderer": "date|d.m.Y",
-        "renderer": "Ext.util.Format.dateRenderer('d.m.Y')",
+        "renderer": "deDate",
         "pivotFunction": "Ext.tualo.PivotGridFunctionCount"
     },
     {
@@ -99,7 +99,7 @@
         "type": "date",
         "align": "left",
         "phprenderer": "date|d.m.Y",
-        "renderer": "Ext.util.Format.dateRenderer('d.m.Y')"
+        "renderer": "deDate"
     },
     {
         "text": "Vertriebsdatum",
@@ -109,7 +109,7 @@
         "type": "date",
         "align": "left",
         "phprenderer": "date|d.m.Y",
-        "renderer": "Ext.util.Format.dateRenderer('d.m.Y')"
+        "renderer": "deDate"
     },
     {
         "text": "Belegposition",
@@ -179,8 +179,6 @@
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "referenz"
     },
-
-
     {
         "text": "Artikel ist aktiv",
         "dataIndex": "status",
@@ -197,8 +195,6 @@
         "table": "blg_pos_{tabellenzusatz}",
         "column": "bemerkung"
     },
-
-
     {
         "text": "Menge",
         "dataIndex": "anzahl",
@@ -207,7 +203,7 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -218,7 +214,7 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -229,10 +225,9 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
     {
         "text": "EK-Einzelpreis",
         "dataIndex": "ekpreis",
@@ -241,7 +236,7 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -253,8 +248,7 @@
         "align": "right",
         "phprenderer": "number|0.000,00",
         "func": " round(blg_pos_{tabellenzusatz}.ekpreis_summe,2)   ",
-        
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -266,11 +260,9 @@
         "align": "right",
         "phprenderer": "number|0.000,00",
         "func": " round(blg_pos_{tabellenzusatz}.netto-blg_pos_{tabellenzusatz}.ekpreis_summe,2)   ",
-        
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
     {
         "text": "GLD-Einzelpreis",
         "dataIndex": "gldpreis",
@@ -279,7 +271,7 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -290,12 +282,9 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-
-
     {
         "text": "Offen",
         "dataIndex": "offen",
@@ -305,24 +294,21 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
     {
         "text": "Brutto",
         "dataIndex": "brutto",
         "table": "blg_pos_{tabellenzusatz}",
         "column": "brutto",
         "func": " round(blg_pos_{tabellenzusatz}.brutto,2)   ",
-        
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
     {
         "text": "Steuer",
         "dataIndex": "steuer",
@@ -331,17 +317,9 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-
-
-
-
-
-
-
     {
         "text": "LF-Menge",
         "dataIndex": "lfanzahl",
@@ -351,7 +329,7 @@
         "align": "right",
         "func": "{lf} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -363,7 +341,7 @@
         "align": "right",
         "func": "{lf} * {#}",
         "phprenderer": "number|0.000,00000",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00000/i')",
+        "renderer": "deValueRenderer5",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -375,7 +353,7 @@
         "align": "right",
         "func": "{lf} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -387,13 +365,9 @@
         "align": "right",
         "func": "{lf} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-
-
-
     {
         "text": "BW-Menge",
         "dataIndex": "bwanzahl",
@@ -403,7 +377,7 @@
         "align": "right",
         "func": "{bw} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -415,7 +389,7 @@
         "align": "right",
         "func": "{bw} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -427,7 +401,7 @@
         "align": "right",
         "func": "{bw} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -439,10 +413,9 @@
         "align": "right",
         "func": "{bw} * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
     {
         "text": "Preisvorgabe",
         "dataIndex": "preisvorgabe",
@@ -452,12 +425,9 @@
         "align": "right",
         "func": "0 * {#}",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-
-
     {
         "text": "Konto",
         "dataIndex": "konto",
@@ -468,8 +438,6 @@
             "valueColumn": "konto"
         }
     },
-
-
     {
         "text": "Bezugsnummer",
         "dataIndex": "bezugsnummer",
@@ -479,17 +447,13 @@
             "table": "(select {IDCOLUMN} n from {DSTABELLE} group by {IDCOLUMN}) xyz",
             "valueColumn": "n"
         }
-    }
-    ,
-
- {
+    },
+    {
         "text": "Zusatz",
         "dataIndex": "zusatz",
         "table": "{DSTABELLE}",
         "column": "zusatz"
     },
-
-
     {
         "text": "Kundenberater",
         "dataIndex": "kundenberater",
@@ -510,7 +474,6 @@
             "valueColumn": "vermittler"
         }
     },
-
     {
         "text": "Branche",
         "dataIndex": "branche",
@@ -570,34 +533,34 @@
         }
     },
     {
-      "text": "Geschaeftsstelle",
-      "dataIndex": "geschaeftsstelle",
-      "table": "{DSTABELLE}",
-      "column": "geschaeftsstelle",
-      "filterList": {
-          "table": "geschaeftsstellen",
-          "valueColumn": "name"
-      }
+        "text": "Geschaeftsstelle",
+        "dataIndex": "geschaeftsstelle",
+        "table": "{DSTABELLE}",
+        "column": "geschaeftsstelle",
+        "filterList": {
+            "table": "geschaeftsstellen",
+            "valueColumn": "name"
+        }
     },
     {
-      "text": "PLZ",
-      "dataIndex": "plz",
-      "table": "{DSTABELLE}",
-      "column": "plz",
-      "filterList": {
-          "table": "{DSTABELLE}",
-          "valueColumn": "plz"
-      }
+        "text": "PLZ",
+        "dataIndex": "plz",
+        "table": "{DSTABELLE}",
+        "column": "plz",
+        "filterList": {
+            "table": "{DSTABELLE}",
+            "valueColumn": "plz"
+        }
     },
     {
-      "text": "Ort",
-      "dataIndex": "ort",
-      "table": "{DSTABELLE}",
-      "column": "ort",
-      "filterList": {
-          "table": "{DSTABELLE}",
-          "valueColumn": "ort"
-      }
+        "text": "Ort",
+        "dataIndex": "ort",
+        "table": "{DSTABELLE}",
+        "column": "ort",
+        "filterList": {
+            "table": "{DSTABELLE}",
+            "valueColumn": "ort"
+        }
     },
     {
         "text": "Vorlage",
@@ -619,30 +582,24 @@
             "valueColumn": "farbe"
         }
     },
-
-{
-    "text": "Sync - Kundennummer",
-    "dataIndex": "sync_kundennummer",
-    "table": "{DSTABELLE}",
-    "column": "sync_kundennummer"
-},
-
-{
-    "text": "Sortierbereich",
-    "dataIndex": "sortbereich",
-    "table": "{DSTABELLE}",
-    "column": "bereich"
-},
-
-
-
-{
-    "text": "Sync - Kostenstelle",
-    "dataIndex": "sync_kostenstelle",
-    "table": "{DSTABELLE}",
-    "column": "sync_kostenstelle"
-},
-
+    {
+        "text": "Sync - Kundennummer",
+        "dataIndex": "sync_kundennummer",
+        "table": "{DSTABELLE}",
+        "column": "sync_kundennummer"
+    },
+    {
+        "text": "Sortierbereich",
+        "dataIndex": "sortbereich",
+        "table": "{DSTABELLE}",
+        "column": "bereich"
+    },
+    {
+        "text": "Sync - Kostenstelle",
+        "dataIndex": "sync_kostenstelle",
+        "table": "{DSTABELLE}",
+        "column": "sync_kostenstelle"
+    },
     {
         "text": "Einheit",
         "dataIndex": "einheit",
@@ -655,8 +612,7 @@
         "table": "blg_pos_{tabellenzusatz}",
         "column": "einheit_faktor",
         "phprenderer": "number|0.000,00000",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00000/i')"
-
+        "renderer": "deValueRenderer5"
     },
     {
         "text": "Warengruppe",
@@ -749,10 +705,10 @@
         }
     },
     {
-      "text": "FiBu Konto",
-      "dataIndex": "fibukonto",
-      "table": "{DSTABELLE}",
-      "column": "fibukonto"
+        "text": "FiBu Konto",
+        "dataIndex": "fibukonto",
+        "table": "{DSTABELLE}",
+        "column": "fibukonto"
     },
     {
         "text": "Gebiet/ Bereich",
@@ -760,7 +716,6 @@
         "table": "blg_pos_{tabellenzusatz}",
         "column": "bereich"
     },
-
     {
         "text": "Datenbasis",
         "dataIndex": "datenbasis",
@@ -770,9 +725,8 @@
             "table": "(select 'Bestand' typ union select 'Belege' typ union select 'Bestandsbeleg' typ) abc",
             "valueColumn": "typ"
         }
-
     },
-{
+    {
         "text": "BZU Abteilung",
         "dataIndex": "gst_text",
         "table": "blg_hdr_{tabellenzusatz}",
@@ -788,7 +742,7 @@
             "valueColumn": "n"
         }
     },
-{
+    {
         "text": "Positions-Referenz",
         "dataIndex": "preferenz",
         "table": "blg_pos_{tabellenzusatz}",
@@ -802,29 +756,23 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-{
+    {
         "text": "Daten uebernommen",
         "dataIndex": "zid",
         "table": "blg_pos_{tabellenzusatz}",
         "column": "zid",
         "func": "if(zid is null and vid is null and lid is null,0,1)"
-        
-    }
-
-,{
+    },
+    {
         "text": "Preisorientierung",
         "dataIndex": "preisorientierung",
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "preisorientierung"
-
     },
-
-
-{
+    {
         "text": "PO Netto",
         "dataIndex": "po_netto",
         "table": "blg_pos_{tabellenzusatz}",
@@ -833,9 +781,8 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00000/i')",
+        "renderer": "deValueRenderer5",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
-
     },
     {
         "text": "Ausgangs-Lager",
@@ -843,7 +790,6 @@
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "von_lager",
         "func": "getWarehouseName(blg_hdr_{tabellenzusatz}.von_lager)",
-
         "filterList": {
             "table": "lager",
             "valueColumn": "name"
@@ -855,7 +801,6 @@
         "table": "artikelgruppen",
         "column": "kundennummer",
         "func": "ifnull(getSupplierName(artikelgruppen.kundennummer),'keiner')",
-
         "filterList": {
             "table": "kadressen",
             "valueColumn": "name"
@@ -867,28 +812,22 @@
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "von_lager",
         "func": "getWarehouseName({lagerlf})",
-
         "filterList": {
             "table": "lager",
             "valueColumn": "name"
         }
     },
-
     {
-     	"text": "Webshop-Bestellung",
+        "text": "Webshop-Bestellung",
         "dataIndex": "x_ws_id",
         "table": "blg_hdr_{tabellenzusatz}",
         "column": "id",
         "func": "if(blg_hdr_{tabellenzusatz}.referenz LIKE 'A____-____','ja','nein')",
-
         "filterList": {
-
             "table": "(select 'ja' n union select 'nein' n ) xyz",
             "valueColumn": "n"
-
         }
     },
-
     {
         "text": "Vertriebsweg",
         "dataIndex": "vertriebsweg",
@@ -896,8 +835,7 @@
         "column": "vertriebsweg",
         "align": "left"
     },
-
- {
+    {
         "text": "Gegeben",
         "dataIndex": "bezahlt",
         "table": "blg_hdr_{tabellenzusatz}",
@@ -905,12 +843,9 @@
         "type": "number",
         "align": "right",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
-
-
-
     {
         "text": "SAP Uebergabe",
         "dataIndex": "sap_beleg_aktiv",
@@ -922,15 +857,12 @@
             "valueColumn": "n"
         }
     },
-
-{
+    {
         "text": "Z-Zusatz",
         "dataIndex": "zzusatz",
         "table": "blg_pos_{tabellenzusatz}",
         "column": "zzusatz"
-        
     },
-
     {
         "text": "LVM",
         "dataIndex": "lvm",
@@ -938,7 +870,7 @@
         "column": "kundennummer",
         "func": "ifnull(getLoeschvermerk(artikelgruppen.gruppe),'keiner')"
     },
-{
+    {
         "text": "Netto (gerundet)",
         "dataIndex": "nettorounded",
         "table": "blg_pos_{tabellenzusatz}",
@@ -947,7 +879,7 @@
         "align": "right",
         "func": "round({#},2)",
         "phprenderer": "number|0.000,00",
-        "renderer": "Ext.util.Format.numberRenderer('0.000,00/i')",
+        "renderer": "deValueRenderer",
         "pivotFunction": "Ext.tualo.PivotGridFunctionSum"
     },
     {
@@ -959,8 +891,5 @@
             "table": " (select concat(typ,' - ',convert(tabellenzusatz using  utf8) ) typ from (select 'Bestand' typ union select 'Beleg' typ union select 'Bestandsbeleg' typ) abcz join blg_config ) abc",
             "valueColumn": "typ"
         }
-
     }
-
-
 ]
