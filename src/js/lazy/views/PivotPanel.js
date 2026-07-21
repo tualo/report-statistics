@@ -1,4 +1,4 @@
-Ext.getApplication().enableDebugXType();
+
 Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
     extend: 'Ext.Panel',
     requires: [
