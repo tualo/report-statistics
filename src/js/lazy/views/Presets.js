@@ -15,20 +15,39 @@ Ext.define('Tualo.reportStatistics.lazy.views.Presets', {
         type: 'hbox',
         align: 'stretch',
     },
-    title: 'Vorlagen',
+    // title: 'Vorlagen',
     config: {
-        documentId: null
+        parentId: null,
+        documentId: null,
+        reportTypes: null,
+        axisData: null
     },
     applyDocumentId: function (id) {
         console.log('PivotPanel: Document ID applied to:', id);
         this.getViewModel().set('documentId', id);
         return id;
     },
+    applyAxisData: function (axisData) {
+        console.log('PivotPanel: Axis Data applied to:', axisData);
+        this.getViewModel().set('axisData', axisData);
+        return axisData;
+    },
+    applyReportTypes: function (reportTypes) {
+        console.log('PivotPanel: Report Types applied to:', reportTypes);
+        this.getViewModel().set('reportTypes', reportTypes);
+        return reportTypes;
+    },
+    applyParentId: function (parentId) {
+        console.log('PivotPanel: Parent ID applied to:', parentId);
+        this.getViewModel().set('parentId', parentId);
+        return parentId;
+    },
     items: [
         {
+            title: 'Vorlagen',
             xtype: 'grid',
             itemId: 'presets-grid',
-            flex: 0.7,
+            flex: 0.3,
             columns: [
                 { text: 'Name', dataIndex: 'name', flex: 1 }
             ],
@@ -42,8 +61,16 @@ Ext.define('Tualo.reportStatistics.lazy.views.Presets', {
         }, {
             title: 'Aktuelle Berichtsvorlage',
             xtype: 'form',
-            flex: 0.3,
+            flex: 0.7,
             bbar: [
+                {
+                    text: 'Löschen',
+                    handler: 'onDeletePreset'
+                },
+                {
+                    text: 'Abbrechen',
+                    handler: 'onCancelPreset'
+                },
                 '->',
                 {
                     text: 'Speichern',

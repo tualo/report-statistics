@@ -10,12 +10,11 @@ CREATE TABLE IF NOT EXISTS `rn_statistik_configs` (
 ) ;
 
 
-CREATE TABLE IF NOT EXISTS `rn_statistik_confs` (
+CREATE TABLE IF NOT EXISTS `rn_statistik_axis` (
   `id` int(11) NOT NULL,
   `rid` int(11) NOT NULL,
   `type` varchar(255) NOT NULL,
-  `page` int(11) NOT NULL,
-  `data` varchar(4000) DEFAULT NULL,
+  `data` json DEFAULT '[]',
   PRIMARY KEY (`id`),
     KEY `idx_rn_statistik_confs_rid` (`rid`),
     CONSTRAINT `fk_rn_statistik_confs_rid` FOREIGN KEY (`rid`) 

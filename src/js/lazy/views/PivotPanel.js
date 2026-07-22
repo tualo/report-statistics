@@ -15,7 +15,6 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
 
 
     config: {
-        tablename: null,
         documentId: null
     },
     onBoxReady: function () {
@@ -24,56 +23,15 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
         this.getController().onBoxReady();
     },
 
-    updateProxy: function (storeName) {
-        /*
-        let vm = this.getViewModel(),
-            store = vm.getStore(storeName),
-            documentId = vm.get('documentId'),
-            table = vm.get('tablename'),
-            parts = ['.', 'report-pivot', storeName, table, documentId];
-
-        store.getProxy().setUrl(parts.join('/'));
-        store.load()
-        */
-    },
-
     applyDocumentId: function (id) {
-        Tualo.reportStatistics.Logger.log('PivotPanel: Document ID applied to:', id);
-        /*
+        console.log('PivotPanel: Document ID applied to:', id);
         this.getViewModel().set('documentId', id);
-        this.updateProxy('values');
-        this.updateProxy('left');
-        this.updateProxy('top');
-        this.updateProxy('filters');
-        */
+
         return id;
     },
 
 
 
-    applyTablename: function (table) {
-        Tualo.reportPivot.Logger.log('PivotPanel: Table Name applied to:', table);
-
-        /*
-        this.getViewModel().set('tablename', table);
-
-        let vm = this.getViewModel(),
-            storeName = 'available',
-            store = vm.getStore(storeName),
-            parts = ['.', 'report-pivot', storeName, table];
-
-
-        this.updateProxy('values');
-        this.updateProxy('left');
-        this.updateProxy('top');
-        this.updateProxy('filters');
-
-        store.getProxy().setUrl(parts.join('/'));
-        store.load();
-        return table;
-        */
-
-    },
 
     layout: 'fit',
     items: [
@@ -98,8 +56,13 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotPanel', {
         {
             hidden: true,
             xtype: 'tualo-reportstatistics-pivotconfigurator',
-            itemId: 'pivotgrid'
-
+            itemId: 'pivotgrid',
+            bind: {
+                documentId: '{documentId}'
+            }
         }
-    ]
+    ],
+    listeners: {
+        boxready: 'onBoxReady'
+    }
 });

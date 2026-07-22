@@ -62,7 +62,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         return json_decode($json, true);
     }
 
-    private static function findColumnsDefinition($columnsDefinition, $dataIndex)
+    public static function findColumnsDefinition($columnsDefinition, $dataIndex)
     {
         foreach ($columnsDefinition as $p) {
             if ($p['dataIndex'] == $dataIndex) {
@@ -150,6 +150,10 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
 
         $having_filter = '';
+
+        if ($dateType == 'belegdatum') {
+            $dateType = 'datum';
+        }
 
         $having_filter = 'blg_hdr_' . $tz . '.' . $dateType . '>=\'' . $startDate . '\' and ';
         $having_filter .= 'blg_hdr_' . $tz . '.' . $dateType . '<=\'' . $stopDate . '\' ';

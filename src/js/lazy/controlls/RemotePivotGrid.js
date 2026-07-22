@@ -96,6 +96,19 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
         this.aggregateData();
 
     },
+    setAxisData: function (axis, data) {
+
+        var grid = this.down('#pivotgrid-configuration-axes-' + axis);
+        console.log('setAxisData', axis, data, grid);
+        grid.getStore().loadData(data);
+    },
+    getAxisData: function (axis) {
+
+        var grid = this.down('#pivotgrid-configuration-axes-' + axis);
+        return grid.getStore().getData().items.map(function (rec) {
+            return rec.data;
+        });
+    },
     layout: 'border',
 
     items: [

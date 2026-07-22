@@ -2,17 +2,15 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotConfigurator', {
     extend: 'Ext.app.ViewModel',
     alias: 'viewmodel.tualo-reportstatistics-pivotconfigurator',
     requires: [
-        //  'Tualo.reportStatistics.lazy.controlls.PivotGridAxisModel',
-        //  'Tualo.reportStatistics.lazy.controlls.models.PivotGridFilters'
+        'Tualo.reportStatistics.lazy.model.Preset'
     ],
     data: {
-        documentId: null,
-        tablename: null,
         vorlage: -1,
         vorlageName: null,
         startdate: (new Date()).getDate() == 1 ? (new Date()) : new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1),
         stopdate: new Date(),
-        datetype: 'buchungsdatum'
+        datetype: 'buchungsdatum',
+        preset: null,
     },
     formulas: {
         title: function (get) {

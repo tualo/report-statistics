@@ -51,5 +51,63 @@ Ext.define('Tualo.reportStatistics.lazy.controller.PivotConfigurator', {
 
         queryObject.reportTypes = reportTypes;
 
-    }
+    },
+    onOpenPreset: function () {
+        let vm = this.getViewModel(),
+            pivotGrid = this.getView().down('tualo-report-statistics-remote-pivotgrid');
+
+        let reportTypes = [];
+        vm.getStore('reportTypes').each(function (rec) {
+            if (rec.get('checked')) {
+                reportTypes.push(rec.get('tabellenzusatz'));
+            }
+        });
+        if (reportTypes.length == 0) {
+            vm.getStore('reportTypes').each(function (rec) {
+                reportTypes.push(rec.get('tabellenzusatz'));
+            });
+        }
+
+
+        Ext.getApplication().addView('Tualo.reportStatistics.lazy.views.Presets', {
+            documentId: vm.get('documentId'),
+            reportTypes: reportTypes,
+            parentId: this.getView().getId(),
+            axisData: {
+                rows: pivotGrid.getAxisData('rows'),
+                columns: pivotGrid.getAxisData('columns'),
+                values: pivotGrid.getAxisData('values'),
+                available: pivotGrid.getAxisData('available')
+            }
+        });
+    },
+
+
+    onSavePreset: function () {
+        let vm = this.getViewModel(),
+            pivotGrid = this.getView().down('tualo-report-statistics-remote-pivotgrid'),
+            queryObject = {},
+            beforeQueryTableparts = this.beforeQueryTableparts(queryObject),
+            record = vm.get('preset');
+
+        record.set('axis', {
+            rows: pivotGrid.getAxisData('rows'),
+            columns: pivotGrid.getAxisData('columns'),
+            values: pivotGrid.getAxisData('values'),
+            available: pivotGrid.getAxisData('available')
+        });
+        record.set('tz', queryObject.reportTypes.join(','));
+        if (record) {
+            record.save({
+                success: function (rec, operation) {
+
+                },
+                failure: function (rec, operation) {
+                    console.error('Preset save failed', rec, operation);
+                }
+            });
+        } else {
+            console.warn('No preset selected to save');
+        }
+    },
 });

@@ -3,6 +3,9 @@ Ext.define('Tualo.reportStatistics.lazy.DateCalculator', {
     calculate: function (str) {
         var idate = new Date();
         var date = new Date();
+        if (typeof str == 'undefined') {
+            return date;
+        }
         var vals = str.split(',');
         var type = vals[0];
         var step = vals[1];

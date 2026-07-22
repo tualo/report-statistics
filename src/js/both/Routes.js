@@ -42,7 +42,7 @@ Ext.define('Tualo.routes.reportStatistics.Presets', {
     handler: {
 
         action: function (values) {
-            if (!values.id) values.id = 'current';
+            if (!values.id) values.id = -1;
             Ext.getApplication().addView('Tualo.reportStatistics.lazy.views.Presets', {
                 documentId: values.id,
             });
