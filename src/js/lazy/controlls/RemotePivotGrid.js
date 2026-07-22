@@ -123,6 +123,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                     "dock": "bottom"
                 }
             ],
+            forceFit: true,
             plugins: {
                 gridexporter: true
             },
