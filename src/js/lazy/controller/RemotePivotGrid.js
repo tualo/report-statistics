@@ -26,7 +26,7 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
                 columns[i].columns = this.reconfigureRenderer(columns[i].columns);
             }
 
-            columns[i].flex = 1;
+            // columns[i].flex = 1;
 
 
         }
