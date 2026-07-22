@@ -118,10 +118,21 @@
         "column": "pos"
     },
     {
-        "text": "Artikel",
-        "dataIndex": "artikel",
+        "text": "Artikelkurztext",
+        "dataIndex": "artikel_kurztext",
         "table": "artikelgruppen",
         "column": "kurztext",
+        "filterList": {
+            "table": "artikelgruppen",
+            "valueColumn": "kurztext",
+            "treeValue": "warengruppe"
+        }
+    },
+    {
+        "text": "Artikellangtext",
+        "dataIndex": "artikel",
+        "table": "artikelgruppen",
+        "column": "gruppe",
         "filterList": {
             "table": "artikelgruppen",
             "valueColumn": "gruppe",
@@ -154,17 +165,6 @@
         "filterList": {
             "table": "lager",
             "valueColumn": "id"
-        }
-    },
-    {
-        "text": "Artikelname",
-        "dataIndex": "artikelname",
-        "table": "blg_pos_{tabellenzusatz}",
-        "column": "artikel",
-        "filterList": {
-            "table": "artikelgruppen",
-            "valueColumn": "gruppe",
-            "treeValue": "warengruppe"
         }
     },
     {
@@ -605,8 +605,8 @@
     {
         "text": "Warengruppe",
         "dataIndex": "warengruppe",
-        "table": "artikelgruppen",
-        "column": "warengruppe",
+        "table": "warengruppen",
+        "column": "name",
         "filterList": {
             "table": "warengruppen",
             "valueColumn": "warengruppe"
