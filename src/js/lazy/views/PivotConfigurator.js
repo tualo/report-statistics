@@ -224,12 +224,12 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
                         type: 'tsv',
                         ext: 'csv'
                     },
-                },
+                }/*,
                 {
                     text: 'Vorlage',
                     // hidden: ((typeof request['locked'] !== 'undefined') && (request['locked'] == '1')),
                     handler: 'onOpenPreset'
-                }
+                }*/
             ],
             items: [
 
