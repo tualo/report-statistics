@@ -85,6 +85,7 @@ Ext.define('Tualo.reportStatistics.lazy.controller.PivotConfigurator', {
 
     onSavePreset: function () {
         let vm = this.getViewModel(),
+            me = this,
             pivotGrid = this.getView().down('tualo-report-statistics-remote-pivotgrid'),
             queryObject = {},
             beforeQueryTableparts = this.beforeQueryTableparts(queryObject),
@@ -100,7 +101,9 @@ Ext.define('Tualo.reportStatistics.lazy.controller.PivotConfigurator', {
         if (record) {
             record.save({
                 success: function (rec, operation) {
-
+                    console.log('Preset saved', rec, operation.getResponse().responseJson.data.id);
+                    vm.set('preset', null);
+                    me.getView().updateDocumentId(operation.getResponse().responseJson.data.id);
                 },
                 failure: function (rec, operation) {
                     console.error('Preset save failed', rec, operation);

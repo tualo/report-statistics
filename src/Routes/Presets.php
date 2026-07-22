@@ -34,6 +34,19 @@ class Presets extends \Tualo\Office\Basic\RouteWrapper
                     $sql = 'select id,name,datetype,datefrom,dateuntil,description,lower(tz) tz from rn_statistik_configs where id={id}';
                     $data = $db->singleRow($sql, $matches);
 
+                    if (!isset($data['id']) && ($matches['id'] < 0)) {
+                        $data = [
+                            'id' => -1,
+                            '__clientid' => $matches['id'],
+                            'name' => 'Neue Vorlage',
+                            'datetype' => 'buchungsdatum',
+                            'datefrom' => 'current,-7,day',
+                            'dateuntil' => 'current,0,day',
+                            'description' => '',
+                            'tz' => ''
+                        ];
+                    }
+
                     $columnsDefinition = Aggregate::getColumnsDefinition();
                     $_available = isset($axis['available']) ? json_decode($axis['available']['data'], true) : [];
                     $_rows = isset($axis['rows']) ? json_decode($axis['rows']['data'], true) : [];
@@ -191,6 +204,7 @@ class Presets extends \Tualo\Office\Basic\RouteWrapper
                     $db->commit();
                 }
 
+                // '__clientid' => $matches['id'],
 
                 App::result('success', true);
             } catch (\Exception $e) {
@@ -198,6 +212,67 @@ class Presets extends \Tualo\Office\Basic\RouteWrapper
                 App::result('message', $e->getMessage());
             }
         }, ['patch'], true);
+
+
+
+        BasicRoute::add('/report-statistics/presets', function ($matches) {
+            App::contenttype('application/json');
+            $db = App::get('session')->getDB();
+            try {
+                $input = json_decode(file_get_contents('php://input'), true);
+                $next_preset_id = $db->singleValue('select ifnull(max(id),0) as id from rn_statistik_configs', [], 'id') + 1;
+
+                $sql = 'insert into rn_statistik_configs (
+                        id,
+                        name,
+                        datetype,
+                        datefrom,
+                        dateuntil,
+                        description,
+                        tz
+                    ) values (
+                        {id},
+                        {name},
+                        {datetype},
+                        {datefrom},
+                        {dateuntil},
+                        {description},
+                        {tz}
+                    )';
+                $input['id'] = $next_preset_id;
+                $db->direct($sql, $input);
+
+                if (isset($input['axis'])) {
+                    $axis = $input['axis'];
+                    $db->autocommit(false);
+                    $db->direct('delete from rn_statistik_axis where rid={id}', $input);
+
+                    $next_id = $db->singleValue('select ifnull(max(id),0) as id from rn_statistik_axis', [], 'id') + 1;
+                    foreach (['available', 'rows', 'columns', 'values'] as $type) {
+                        if (isset($axis[$type])) {
+                            $string_data = json_encode($axis[$type]);
+
+                            $db->direct('insert into rn_statistik_axis (id,rid,type,data) values ({id},{rid},{type},{data})', [
+                                'id' => $next_id++,
+                                'rid' => $input['id'],
+                                'type' => $type,
+                                'data' => $string_data
+                            ]);
+                        }
+                    }
+                    $db->commit();
+                }
+                App::result('data', $input);
+
+                App::result('success', true);
+            } catch (\Exception $e) {
+                App::result('success', false);
+                App::result('sql', $db->last_sql);
+
+                App::result('input', $input);
+                App::result('message', $e->getMessage());
+            }
+        }, ['post'], true);
 
 
         BasicRoute::add('/report-statistics/presets', function ($matches) {

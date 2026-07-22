@@ -44,20 +44,29 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
             documentId = vm.get('documentId'),
             preset = vm.get('preset');
 
-        if (Ext.isEmpty(documentId)) {
+        if ((!Ext.isEmpty(documentId)) && (documentId < 0)) {
             preset = Ext.create('Tualo.reportStatistics.lazy.model.Preset', {
-                id: -1,
                 name: 'Neue Vorlage',
                 datetype: 'buchungsdatum',
-                datefrom: (new Date()).getDate() == 1 ? (new Date()) : new Date((new Date()).getFullYear(), (new Date()).getMonth(), 1),
-                dateuntil: new Date(),
+                datefrom: 'current,-7,day',
+                dateuntil: 'current,0,day',
                 description: '',
-                tz: ''
+                tz: '',
+                axis: {
+                    rows: [],
+                    columns: [],
+                    values: []
+                }
             });
+            vm.set('preset', preset);
+
+            me.setupPreset(preset);
+
         } else if (Ext.isEmpty(preset)) {
             preset = Ext.create('Tualo.reportStatistics.lazy.model.Preset', {
                 id: documentId,
             });
+
             if ((this._lastQueryTime === null) || (Date.now() - this._lastQueryTime) > 1000) {
                 this._lastQueryTime = Date.now();
                 preset.load({

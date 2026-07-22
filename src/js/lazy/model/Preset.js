@@ -1,5 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.model.Preset', {
     extend: 'Ext.data.Model',
+    clientIdProperty: '__clientid',
     proxy: {
         type: 'ajax',
         actionMethods: {
@@ -19,25 +20,50 @@ Ext.define('Tualo.reportStatistics.lazy.model.Preset', {
     },
     fields: [{
         dataIndex: 'id',
-        name: 'id'
+        type: 'int',
     }, {
         dataIndex: 'name',
-        name: 'name'
+        type: 'string',
     }, {
         dataIndex: 'datetype',
-        name: 'datetype'
+        type: 'string'
     }, {
         dataIndex: 'datefrom',
-        name: 'datefrom'
+        type: 'string',
+        convert: function (value, record) {
+            if (Ext.isEmpty(value)) {
+                return 'current,-7,day';
+            }
+            return value;
+        }
     }, {
         dataIndex: 'dateuntil',
-        name: 'dateuntil'
+
+        type: 'string',
+        convert: function (value, record) {
+            if (Ext.isEmpty(value)) {
+                return 'current,0,day';
+            }
+            return value;
+        }
     }, {
         dataIndex: 'description',
-        name: 'description'
+        type: 'string',
+        convert: function (value, record) {
+            if (Ext.isEmpty(value)) {
+                return '';
+            }
+            return value;
+        }
     }, {
         dataIndex: 'tz',
-        name: 'tz'
+        type: 'string',
+        convert: function (value, record) {
+            if (Ext.isEmpty(value)) {
+                return '';
+            }
+            return value;
+        }
     }, {
         dataIndex: 'axis',
         name: 'axis'
