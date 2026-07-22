@@ -120,8 +120,8 @@
     {
         "text": "Artikel",
         "dataIndex": "artikel",
-        "table": "blg_pos_{tabellenzusatz}",
-        "column": "artikel",
+        "table": "artikelgruppen",
+        "column": "kurztext",
         "filterList": {
             "table": "artikelgruppen",
             "valueColumn": "gruppe",
