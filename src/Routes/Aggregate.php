@@ -589,6 +589,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                     'dataIndex' => 'fld_' . count($agregation_fields),
                     'align' => $v['align'],
                     'renderer' => $v['renderer'],
+                    'width' => 150,
                     'text' => $v['text'] //xtxt.join(' - ')
                 );
                 if ($summaryType != '') {
