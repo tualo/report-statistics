@@ -44,7 +44,7 @@
         "tables": [
             {
                 "table": "artikelgruppen",
-                "on": "warengruppen.warengruppe= artikelgruppen.warengruppe"
+                "on": "warengruppen.id = artikelgruppen.warengruppe"
             }
         ]
     },
