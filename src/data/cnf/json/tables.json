@@ -1,10 +1,7 @@
 [
-
     {
         "table": "blg_pos_{tabellenzusatz}",
-        "tables": [
-
-        ]
+        "tables": []
     },
     {
         "table": "blg_hdr_{tabellenzusatz}",
@@ -38,7 +35,7 @@
         "tables": [
             {
                 "table": "blg_pos_{tabellenzusatz}",
-                "on": "artikelgruppen.gruppe = blg_pos_{tabellenzusatz}.artikel"
+                "on": "artikelgruppen.gruppen_id = blg_pos_{tabellenzusatz}.artikel"
             }
         ]
     },
@@ -60,5 +57,4 @@
             }
         ]
     }
-
 ]
