@@ -438,6 +438,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
+        $insert = str_replace('{bw}', $config['bw_faktor'], $insert);
+        $insert = str_replace('{lf}', $config['lager_faktor'], $insert);
         $insert = str_replace('{tabellenzusatz_uc}', strtoupper($tz), $insert);
         // $insert = str_replace('{datumfeld}', $datumfeld, $insert);
 

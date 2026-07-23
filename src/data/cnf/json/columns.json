@@ -18,6 +18,16 @@
         }
     },
     {
+        "text": "Job",
+        "dataIndex": "jobno",
+        "table": "blg_hdr_{tabellenzusatz}",
+        "column": "jobno",
+        "filterList": {
+            "table": "(select jobno from blg_hdr_{tabellenzusatz}) xzy",
+            "valueColumn": "jobno"
+        }
+    },
+    {
         "text": "Summenhilfe",
         "dataIndex": "summenhilfe",
         "table": "blg_pos_{tabellenzusatz}",
