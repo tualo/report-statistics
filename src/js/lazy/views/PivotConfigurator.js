@@ -253,14 +253,14 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
             title: 'Berichtsvorlage',
             xtype: 'form',
             bbar: [
-                {
+                /*{
                     text: 'Löschen',
                     handler: 'onDeletePreset'
                 },
                 {
                     text: 'Abbrechen',
                     handler: 'onCancelPreset'
-                },
+                },*/
                 '->',
                 {
                     text: 'Speichern',
