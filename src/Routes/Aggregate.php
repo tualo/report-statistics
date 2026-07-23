@@ -443,8 +443,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{tabellenzusatz_uc}', strtoupper($tz), $insert);
         // $insert = str_replace('{datumfeld}', $datumfeld, $insert);
 
-        App::result('temp_fields', $fields);
-        App::result('temp_insert', $insert);
+        App::result('temp_fields_' . $tz, $fields);
+        App::result('temp_insert_' . $tz, $insert);
         $db->direct($insert);
         return true;
     }
