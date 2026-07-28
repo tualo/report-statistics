@@ -5,6 +5,44 @@ namespace Tualo\Office\ReportStatistics\Routes;
 use Tualo\Office\Basic\TualoApplication as App;
 use Tualo\Office\Basic\Route as BasicRoute;
 
+class Renderer
+{
+    public static $ds_renderer = [];
+    public static $ds_renderer_data = [];
+
+
+    public static function initDSRenderer(): void
+    {
+        $db = App::get('session')->getDB();
+        $data = $db->direct('select * from view_ds_renderer', [], 'renderername');
+        self::$ds_renderer = $data;
+    }
+
+    public static function initDSRendererData($renderername): void
+    {
+        if (!isset(self::$ds_renderer[$renderername])) return;
+        $db = App::get('session')->getDB();
+        $item = self::$ds_renderer[$renderername];
+        self::$ds_renderer_data[$renderername] = $db->directMap('select * from `' . $item['table_name'] . '`', [], $item['idfield'], $item['displayfield']);
+    }
+
+
+    public static function render($renderername, $value): mixed
+    {
+        if (count(self::$ds_renderer) == 0) {
+            self::initDSRenderer();
+        }
+        if (!isset(self::$ds_renderer_data[$renderername])) {
+            self::initDSRendererData($renderername);
+        }
+        if (isset(self::$ds_renderer_data[$renderername])) {
+            if (isset(self::$ds_renderer_data[$renderername][$value])) {
+                return self::$ds_renderer_data[$renderername][$value];
+            }
+        }
+        return $value;
+    }
+}
 
 class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 {
@@ -526,12 +564,15 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $leftFields[] = $l['dataIndex'];
         }
 
+
+        $top_renderers = [];
         foreach ($columns as $t) {
             $top_field = $t['dataIndex'];
             if ($top_field_list !== '') {
                 $top_field_list .= ',';
             }
             $top_field_list .= $top_field;
+            $top_renderers[$top_field] = $t['renderer'];
         }
 
         $temporaryName =  self::createTemporaryTable($columns, $rows, $values);
@@ -542,6 +583,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $top_sql = 'select  ' . $top_field_list . ' from ' . $temporaryName . ' group by ' . $top_field_list . ' ';
         $top_field_data = $db->direct($top_sql);
         App::result('top_field_data', $top_field_data);
+
+
 
 
 
@@ -566,6 +609,11 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $condition .= $k . ' = \'' . $v . '\' ';
                 $xtxt[] = $v;
                 $item['text'] = $v;
+                // ggf. rendering 
+                if (isset($top_renderers[$k])) {
+                    $item['text'] = Renderer::render($top_renderers[$k], $v);
+                }
+
                 $dColumn[] = $v;
                 $ci = array(
                     'text' => $v,
