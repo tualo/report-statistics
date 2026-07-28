@@ -1,6 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunction', {
 	value: 0,
-	alias: 'pivotfunction.base',
+	alias: 'reportpivotfunction.base',
 	titleTemplate: '{text}',
 	calculate: function (value) {
 		this.value += value;

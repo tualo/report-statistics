@@ -1,6 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunctionAverage', {
 	extend: 'Tualo.reportStatistics.lazy.controlls.PivotGridFunction',
-	alias: 'pivotfunction.average',
+	alias: 'reportpivotfunction.average',
 	value: 0,
 	count: 0,
 	titleTemplate: 'Durchschnitt ({text})',

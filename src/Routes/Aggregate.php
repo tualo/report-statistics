@@ -577,7 +577,6 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $txt = 'sum(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                 switch ($v['pivotFunction']) {
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum2Digits':
-                    case 'sum':
                         $txt = 'round( sum(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END), 2) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
@@ -591,31 +590,26 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         break;
 
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMax':
-                    case 'max':
                         $txt = 'max(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'max';
                         $summaryRenderer = 'deValueRenderer';
                         break;
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMin':
-                    case 'min':
                         $txt = 'min(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'min';
                         $summaryRenderer = 'deValueRenderer';
                         break;
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount':
-                    case 'count':
                         $txt = 'count(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionDistinctCount':
-                    case 'count':
                         $txt = 'count(distinct  case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'sum';
                         $summaryRenderer = 'deValueRenderer';
                         break;
                     case 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionAverage':
-                    case 'avg':
                         $txt = 'avg(case when (' . $condition . ') THEN ' . $v['dataIndex'] . ' END) ' . ' FLD_' . count($agregation_fields);
                         $summaryType = 'avg';
                         $summaryRenderer = 'deValueRenderer';

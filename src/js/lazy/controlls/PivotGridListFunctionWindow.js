@@ -35,11 +35,11 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridListFunctionWindow', 
       node.set('checked', true);
     }
 
-    var allFunctions = Ext.ClassManager.getNamesByExpression('pivotfunction.*');
+    var allFunctions = Ext.ClassManager.getNamesByExpression('reportpivotfunction.*');
     var pv = record.get('pivotFunction');
 
     for (var x in allFunctions) {
-      if (allFunctions[x] != 'pivotFunction.base') {
+      if (allFunctions[x] != 'reportpivotfunction.base') {
         var v = Ext.create(allFunctions[x], {});
         chlds.push({
           text: v.titleTemplate.replace('{text}', record.get('text')),

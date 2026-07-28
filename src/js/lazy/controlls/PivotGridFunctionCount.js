@@ -1,7 +1,7 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount', {
 	extend: 'Tualo.reportStatistics.lazy.controlls.PivotGridFunction',
 	alternativeClassName: 'Ext.tualo.PivotGridFunctionCount',
-	alias: 'pivotfunction.count',
+	alias: 'reportpivotfunction.count',
 	value: 0,
 	titleTemplate: 'Anzahl ({text})',
 	calculate: function (value) {

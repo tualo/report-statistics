@@ -1,6 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunctionDistinctCount', {
   extend: 'Tualo.reportStatistics.lazy.controlls.PivotGridFunction',
-  alias: 'pivotfunction.distinctcount',
+  alias: 'reportpivotfunction.distinctcount',
   alternativeClassName: 'Ext.tualo.PivotGridFunctionDistinctCount',
   value: 0,
   titleTemplate: 'indiv. Anzahl ({text})',

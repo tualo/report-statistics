@@ -1,6 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMin', {
 	extend: 'Tualo.reportStatistics.lazy.controlls.PivotGridFunction',
-	alias: 'pivotfunction.min',
+	alias: 'reportpivotfunction.min',
 	alternativeClassName: 'Ext.tualo.PivotGridFunctionMin',
 	value: null,
 	titleTemplate: 'Minimum ({text})',

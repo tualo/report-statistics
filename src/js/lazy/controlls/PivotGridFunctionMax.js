@@ -1,6 +1,6 @@
 Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMax', {
 	extend: 'Tualo.reportStatistics.lazy.controlls.PivotGridFunction',
-	alias: 'pivotfunction.max',
+	alias: 'reportpivotfunction.max',
 	alternativeClassName: 'Ext.tualo.PivotGridFunctionMax',
 	value: null,
 	titleTemplate: 'Maximum ({text})',
