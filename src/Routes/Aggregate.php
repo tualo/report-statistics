@@ -512,6 +512,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             if (isset($l['text'])) {
                 $item['text'] = $l['text'];
             }
+            if (isset($l['renderer'])) {
+                $item['renderer'] = $l['renderer'];
+            }
             $columnsDefinition[] = $item;
 
             $fitem = array(
