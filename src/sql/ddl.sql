@@ -20,3 +20,6 @@ CREATE TABLE IF NOT EXISTS `rn_statistik_axis` (
     CONSTRAINT `fk_rn_statistik_confs_rid` FOREIGN KEY (`rid`) 
     REFERENCES `rn_statistik_configs` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ;
+
+
+
