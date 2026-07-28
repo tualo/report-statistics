@@ -607,12 +607,15 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                     $condition .= ' and ';
                 }
                 $condition .= $k . ' = \'' . $v . '\' ';
+
+
+                if (isset($top_renderers[$k])) {
+                    $v = Renderer::render($top_renderers[$k], $v);
+                }
+
                 $xtxt[] = $v;
                 $item['text'] = $v;
-                // ggf. rendering 
-                if (isset($top_renderers[$k])) {
-                    $item['text'] = Renderer::render($top_renderers[$k], $v);
-                }
+
 
                 $dColumn[] = $v;
                 $ci = array(
