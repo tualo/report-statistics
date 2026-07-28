@@ -41,7 +41,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
     public static function getColumnsDefinition(): array
     {
         $json = '[]';
-        if (App::configuration('report_statistics', 'use_file_columns_definition', '1') === '1') {
+        if (App::configuration('report_statistics', 'use_file_columns_definition', '0') === '1') {
             $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/columns.json');
         } else {
             $db = App::get('session')->getDB();
@@ -51,7 +51,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $data[$i]['pivotFunction'] = $data[$i]['pivot_function'];
             }
             $json = json_encode($data);
-            $json = str_replace('"sum"', '"Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum"', $json);
+            // $json = str_replace('"sum"', '"Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum"', $json);
         }
 
 

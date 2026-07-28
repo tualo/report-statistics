@@ -16,8 +16,9 @@ class Available extends \Tualo\Office\Basic\RouteWrapper
             try {
                 //                $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/columns.json');
 
-                $json = Aggregate::getColumnsDefinition();
+                $columnsDefinition = Aggregate::getColumnsDefinition();
 
+                /*
                 $json = str_replace("Ext.tualo.PivotGridFunctionCount", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount", $json);
                 $json = str_replace("Ext.tualo.PivotGridFunctionSum", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum", $json);
                 $json = str_replace("Ext.tualo.PivotGridFunctionMin", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMin", $json);
@@ -25,6 +26,7 @@ class Available extends \Tualo\Office\Basic\RouteWrapper
                 $json = str_replace("Ext.tualo.PivotGridFunctionAverage", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionAverage", $json);
 
                 $columnsDefinition = json_decode($json, true);
+                */
 
 
                 App::result('data', $columnsDefinition);
