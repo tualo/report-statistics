@@ -40,7 +40,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
     }
     public static function getColumnsDefinition(): array
     {
-        $json = [];
+        $json = '[]';
         if (App::configuration('report_statistics', 'use_file_columns_definition', '1') === '1') {
             $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/columns.json');
         } else {
