@@ -39,8 +39,9 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
             //console.log(this.columnRendererMap);
             columns = this.reconfigureRenderer(columns);
 
-            console.log(columns);
+            console.log('reconfigureColumns', columns);
             me.headerCt.add(columns);
+            console.log('reconfigureColumns done', columns);
             // this._chartColumns = columns;
             //this.reconfigureAxes(columns);
             //this.chart.refresh();
