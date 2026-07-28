@@ -61,6 +61,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
                 if ($data[$i]['pivotFunction'] != '') {
                     $data[$i]['summaryRenderer'] = $data[$i]['renderer'];
+                    $data[$i]['summaryType'] = $data[$i]['pivotFunction'];
                 }
             }
             $json = json_encode($data);
