@@ -51,6 +51,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $data[$i]['pivotFunction'] = $data[$i]['pivot_function'];
             }
             $json = json_encode($data);
+            $json = str_replace('"sum"', '"Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum"', $json);
         }
 
 
