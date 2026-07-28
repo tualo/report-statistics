@@ -32,6 +32,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridAxis', {
         hidden: (config.showFunction) ? !config.showFunction : true,
         renderer: function (v, m, rec) {
           try {
+            console.log('renderer', v, m, rec);
             var c = Ext.create(v, {});
             return c.titleTemplate.replace('{text}', rec.get('text'));
           } catch (e) {
