@@ -76,6 +76,18 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         }
         return $columns_def;
     }
+
+    public static function getTableAlias(array $item): string
+    {
+        $alias = '';
+        if (isset($item['table_id'])) {
+            $alias = 'tbl_' . $item['table_id'];
+        } else if (isset($item['table'])) {
+            $alias = $item['table'];
+        }
+        return $alias;
+    } 
+
     public static function getColumnsDefinition(): array
     {
         $json = '[]';
@@ -285,9 +297,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= $x['table'] . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= self::getTableAlias($x) . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -301,7 +313,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         App::result('debug_sql', $db->last_sql);
@@ -343,9 +355,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= $x['table'] . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= self::getTableAlias($x) . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -358,7 +370,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}',self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         switch ($x['type']) {
@@ -398,9 +410,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= $x['table'] . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= self::getTableAlias($x) . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -414,7 +426,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         switch ($x['type']) {
@@ -456,9 +468,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= $x['table'] . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= self::getTableAlias($x)  . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', $x['table'] . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', self::getTableAlias($x) . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -540,7 +552,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
 
         // fix for not costcenter related tables
-        $insert = str_replace($config['adress_bezug'].'.0', '0', $insert);
+        $insert = str_replace('`.0', '0', $insert);
 
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
