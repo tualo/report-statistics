@@ -208,9 +208,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 $type = 'varchar(4000)';
             }
             if ($fld['dataIndex'] != 'belegnummer') {
-                if ($fld['func'] != '') {
+                if (isset($fld['func']) && ($fld['func'] != '')) {
                     $type = 'varchar(255)';
-                } else if (isset($fld['type'])) {
+                } else if (isset($fld['type']) && ($fld['type'] != '')) {
                     switch ($fld['type']) {
                         case 'number':
                             $type = 'decimal(25,5)';
