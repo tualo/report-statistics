@@ -82,7 +82,7 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
                     timeout: 5000,
                     slideInDuration: 500,
                     minWidth: 400,
-                    bodyStyle: 'background-color:#f00d;',
+                    // bodyStyle: 'background-color:#f00d;',
                     iconCls: 'fa fa-warning'
                 });
 
