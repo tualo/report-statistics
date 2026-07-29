@@ -37,6 +37,7 @@ Ext.define('Tualo.reportStatistics.lazy.models.RemotePivotGrid', {
             },
             listeners: {
                 scope: 'controller',
+                    exception: 'onProxyExceptionX',
                 beforeload: 'onBeforeStoreLoad',
                 load: 'onLoad',
                 metachange: 'onMetaChanged',
