@@ -76,7 +76,7 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
             let r = eOpts.getResponse();
             
             Ext.toast({
-                    html: res.msg,
+                    html: r.responseJson.msg,
                     title: 'Fehler',
                     align: 't',
                     timeout: 5000,
