@@ -73,16 +73,20 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
         console.log('onLoad', store, records, successful, eOpts);
         if (!successful) {
             console.log('Load was not successful',eOpts.getResponse());
-            window.r = eOpts.getResponse();
+            let r = eOpts.getResponse();
+            
+            Ext.Toast.show({
+                title: 'Fehler',
+                html: r.responseJson.message,
+                align: 't',
+                bodyStyle: 'background-color:#f00;',
+                style: {
+                    backgroundColor: '#f00'
+                },
+                timeout: 5000,
+                slideInDuration: 500,
+                minWidth: 400
+            });
         }
-    },
-
-    onProxyException: function (proxy, response, operation) {
-        console.log('onProxyException', proxy, response, operation);
-      //  this.fireEvent('onProxyException', proxy, response, operation);
-    },
-    onProxyExceptionX: function (proxy, response, operation) {
-        console.log('onProxyException', proxy, response, operation);
-      //  this.fireEvent('onProxyException', proxy, response, operation);
     },
 });

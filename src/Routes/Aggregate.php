@@ -870,7 +870,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 App::result('success', true);
             } catch (\Exception $e) {
                 App::result('success', false);
-                App::result('message', $e->getMessage());
+                App::result('msg', $e->getMessage());
             }
         }, ['post'], false);
     }
