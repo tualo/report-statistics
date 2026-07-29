@@ -75,18 +75,18 @@ Ext.define('Tualo.reportStatistics.lazy.controller.RemotePivotGrid', {
             console.log('Load was not successful',eOpts.getResponse());
             let r = eOpts.getResponse();
             
-            Ext.Toast.show({
-                title: 'Fehler',
-                html: r.responseJson.message,
-                align: 't',
-                bodyStyle: 'background-color:#f00;',
-                style: {
-                    backgroundColor: '#f00'
-                },
-                timeout: 5000,
-                slideInDuration: 500,
-                minWidth: 400
-            });
+            Ext.toast({
+                    html: res.msg,
+                    title: 'Fehler',
+                    align: 't',
+                    timeout: 5000,
+                    slideInDuration: 500,
+                    minWidth: 400,
+                    bodyStyle: 'background-color:#f00;',
+                    iconCls: 'fa fa-warning'
+                });
+
+           
         }
     },
 });
