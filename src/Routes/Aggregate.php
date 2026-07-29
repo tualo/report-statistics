@@ -265,9 +265,10 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
        
         $x = self::findColumnsDefinition($columnsDefinition,  $dateType);
-        $having_filter =  self::getTableAlias($x) . '.' . $dateType . '>=\'' . $startDate . '\' and ';
-        $having_filter .=  self::getTableAlias($x) . '.' . $dateType . '<=\'' . $stopDate . '\' ';
-
+        if (!empty($x)) {
+            $having_filter =  self::getTableAlias($x) . '.' . $dateType . '>=\'' . $startDate . '\' and ';
+            $having_filter .=  self::getTableAlias($x) . '.' . $dateType . '<=\'' . $stopDate . '\' ';
+        }
 
         $columnsHash = array();
         foreach ($columnsDefinition as $key => $value) {
