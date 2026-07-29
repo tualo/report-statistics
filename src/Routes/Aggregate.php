@@ -535,6 +535,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
         $insert = 'insert into ' . $temporaryName . ' (datenbasis,erweiterte_datenbasis,' . implode(',', $ifields) . ') select \'Beleg\' datenbasis, concat(\'Beleg - \',\'' . $tz . '\') erweiterte_datenbasis,' . implode(',', $fields) . ' from ' . implode(' join ', $from) . ' ' . ' where ' . $having_filter;
         $insert = str_replace('{IDCOLUMN}', $config['bezug_id'], $insert);
+        $insert = str_replace('{COSTCENTERCOLUMN}', $config['bezug_kst'], $insert);
+        
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
