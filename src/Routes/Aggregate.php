@@ -262,8 +262,11 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $dateType = 'datum';
         }
 
-        $having_filter = 'blg_hdr_' . $tz . '.' . $dateType . '>=\'' . $startDate . '\' and ';
-        $having_filter .= 'blg_hdr_' . $tz . '.' . $dateType . '<=\'' . $stopDate . '\' ';
+
+       
+        $x = self::findColumnsDefinition($columnsDefinition,  $dateType);
+        $having_filter =  self::getTableAlias($x) . '.' . $dateType . '>=\'' . $startDate . '\' and ';
+        $having_filter .=  self::getTableAlias($x) . '.' . $dateType . '<=\'' . $stopDate . '\' ';
 
 
         $columnsHash = array();
