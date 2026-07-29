@@ -477,6 +477,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = '';
 
         $from = array();
+
+        if (App::configuration('report_statistics', 'use_file_columns_definition', '0') === '1') {
         $tablesDefinition = self::getTablesDefinition();
 
         $tempDefinition = array();
@@ -526,8 +528,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $from[] = $definition['table'] . ((count($on) > 0) ? (' on ' . implode(' and ', $on)) : '');
         }
 
-        if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
-            $from = $db->singleValue('select from_fragment from view_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment');
+        }else if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
+            $from = [str_replace('from ', '', $db->singleValue('select from_fragment from view_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment')  )];
         }
 
         $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
