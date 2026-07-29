@@ -18,7 +18,7 @@ class Renderer
         self::$ds_renderer = $data;
     }
 
-    public static function initDSRendererData($renderername): void
+    public static function initDSRendererData(string $renderername): void
     {
         if (!isset(self::$ds_renderer[$renderername])) return;
         $db = App::get('session')->getDB();
@@ -27,7 +27,7 @@ class Renderer
     }
 
 
-    public static function render($renderername, $value): mixed
+    public static function render(string $renderername, mixed $value): mixed
     {
         if (count(self::$ds_renderer) == 0) {
             self::initDSRenderer();
@@ -97,7 +97,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                 if ($data[$i]['pivotFunction'] === '') unset($data[$i]['pivotFunction']);
                 if ($data[$i]['func'] === '') unset($data[$i]['func']);
 
-                if ($data[$i]['pivotFunction'] != '') {
+                if (isset($data[$i]['pivotFunction']) && ($data[$i]['pivotFunction'] != '')) {
                     $data[$i]['summaryRenderer'] = $data[$i]['renderer'];
                     $data[$i]['summaryType'] = $data[$i]['pivotFunction'];
                 }
