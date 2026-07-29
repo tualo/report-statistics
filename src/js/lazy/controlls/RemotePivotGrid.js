@@ -91,11 +91,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                 }
             });
         }
-    },
-    onProxyException: function (proxy, response, operation) {
-        console.log('onProxyException', proxy, response, operation);
-      //  this.fireEvent('onProxyException', proxy, response, operation);
-    },
+    }, 
     onAxisChanged: function (grid, type) {
         this.aggregateData();
 
