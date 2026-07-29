@@ -538,6 +538,10 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{COSTCENTERCOLUMN}', $config['bezug_kst'], $insert);
         
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
+
+        // fix for not costcenter related tables
+        $insert = str_replace($config['adress_bezug'].'.0', '0', $insert);
+
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
         $insert = str_replace('{bw}', $config['bw_faktor'], $insert);
