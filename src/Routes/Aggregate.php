@@ -527,7 +527,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         }
 
         if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
-            $from = $db->singleValue('select from_fragment fromview_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment');
+            $from = $db->singleValue('select from_fragment from view_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment');
         }
 
         $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
