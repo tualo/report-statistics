@@ -25,6 +25,9 @@ Ext.define('Tualo.reportStatistics.lazy.models.RemotePivotGrid', {
                     update: 'PATCH',
                     destroy: 'DELETE'
                 },
+                listeners: {
+                    exception: 'onProxyException'
+                },
                 url: './report-statistics/aggregate',
                 reader: {
                     type: 'json',
