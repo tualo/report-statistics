@@ -118,7 +118,34 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
     public static function getTablesDefinition(): array
     {
+
+        $json = '[]';
+        if (App::configuration('report_statistics', 'use_file_columns_definition', '0') === '1') {
         $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/tables.json');
+        } else {
+            $db = App::get('session')->getDB();
+            $data = $db->direct('select * from view_report_statistics_columns');
+            for ($i = 0; $i < count($data); $i++) {
+                $data[$i]['dataIndex'] = $data[$i]['data_index'];
+                $data[$i]['pivotFunction'] = $data[$i]['pivot_function'];
+                unset($data[$i]['data_index']);
+                unset($data[$i]['pivot_function']);
+
+                if ($data[$i]['pivotFunction'] === 'sum') {
+                    $data[$i]['pivotFunction'] = 'Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum';
+                }
+
+                if ($data[$i]['pivotFunction'] === '') unset($data[$i]['pivotFunction']);
+                if ($data[$i]['func'] === '') unset($data[$i]['func']);
+
+                if ($data[$i]['pivotFunction'] != '') {
+                    $data[$i]['summaryRenderer'] = $data[$i]['renderer'];
+                    $data[$i]['summaryType'] = $data[$i]['pivotFunction'];
+                }
+            }
+            $json = json_encode($data);
+            // $json = str_replace('"sum"', '"Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum"', $json);
+        }
         $json = str_replace("Ext.tualo.PivotGridFunctionCount", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount", $json);
         $json = str_replace("Ext.tualo.PivotGridFunctionSum", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum", $json);
         $json = str_replace("Ext.tualo.PivotGridFunctionMin", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionMin", $json);
@@ -499,6 +526,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $from[] = $definition['table'] . ((count($on) > 0) ? (' on ' . implode(' and ', $on)) : '');
         }
 
+        if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
+            $from = $db->singleValue('select from_fragment fromview_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment');
+        }
 
         $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
         $insert = 'insert into ' . $temporaryName . ' (datenbasis,erweiterte_datenbasis,' . implode(',', $ifields) . ') select \'Beleg\' datenbasis, concat(\'Beleg - \',\'' . $tz . '\') erweiterte_datenbasis,' . implode(',', $fields) . ' from ' . implode(' join ', $from) . ' ' . ' where ' . $having_filter;
@@ -612,6 +642,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
 
                 if (isset($top_renderers[$k])) {
+                    App::result('top_renderers', $top_renderers);
                     $v = Renderer::render($top_renderers[$k], $v);
                 }
 
