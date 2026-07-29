@@ -552,8 +552,8 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
 
         // fix for not costcenter related tables
-        // replace `tbl_<any>`.0  by 0, because some tables have no costcenter column and the join will fail
-        $insert = preg_replace('`tbl_[^\.]+`\.\0', '0', $insert);
+        // replace `tbl_<any>`.0 by 0, because some tables have no costcenter column and the join will fail
+        $insert = preg_replace('/`tbl_[^`]+`\.0/', '0', $insert);
 
         $insert = str_replace('{BLGTABELLE}', $config['adress_bezug'], $insert);
         $insert = str_replace('{tabellenzusatz}', $tz, $insert);
