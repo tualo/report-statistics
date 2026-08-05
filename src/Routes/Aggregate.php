@@ -186,6 +186,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             'table_name' => str_replace('{tabellenzusatz}', $tz, $tablename),
             'column_name' => $columnname
         ], 'c');
+        App::result('column_exists_' . $tablename . '_' . $columnname, $data);
         return ($data > 0);
     }
 
