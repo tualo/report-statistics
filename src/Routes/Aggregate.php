@@ -86,7 +86,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
             $alias = $item['table'];
         }
         return $alias;
-    } 
+    }
 
     public static function getColumnsDefinition(): array
     {
@@ -133,7 +133,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
 
         $json = '[]';
         if (App::configuration('report_statistics', 'use_file_columns_definition', '0') === '1') {
-        $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/tables.json');
+            $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/tables.json');
         } else {
             $db = App::get('session')->getDB();
             $data = $db->direct('select * from view_report_statistics_columns');
@@ -263,11 +263,11 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         }
 
 
-       
+
         $x = self::findColumnsDefinition($columnsDefinition,  $dateType);
         if (!empty($x)) {
-            $having_filter =  '`'.self::getTableAlias($x).'`' . '.' . $dateType . '>=\'' . $startDate . '\' and ';
-            $having_filter .=  '`'.self::getTableAlias($x).'`' . '.' . $dateType . '<=\'' . $stopDate . '\' ';
+            $having_filter =  '`' . self::getTableAlias($x) . '`' . '.' . $dateType . '>=\'' . $startDate . '\' and ';
+            $having_filter .=  '`' . self::getTableAlias($x) . '`' . '.' . $dateType . '<=\'' . $stopDate . '\' ';
         }
 
         $columnsHash = array();
@@ -301,9 +301,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= '`'.self::getTableAlias($x).'`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= '`' . self::getTableAlias($x) . '`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -317,7 +317,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         App::result('debug_sql', $db->last_sql);
@@ -359,9 +359,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= '`'.self::getTableAlias($x).'`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= '`' . self::getTableAlias($x) . '`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -374,7 +374,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}','`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         switch ($x['type']) {
@@ -414,9 +414,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= '`'.self::getTableAlias($x).'`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= '`' . self::getTableAlias($x) . '`' . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -430,7 +430,7 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                         if (!isset($x['func'])) {
                             $x['func'] = '{#}';
                         }
-                        $fields[] = str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
+                        $fields[] = str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' ' . $x['dataIndex'];
                         $tables[strtolower($x['table'])] = false;
                     } else {
                         switch ($x['type']) {
@@ -472,9 +472,9 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
                             $having_filter .= ' and ';
                         }
                         if (!isset($x['func'])) {
-                            $having_filter .= '`'.self::getTableAlias($x).'`'  . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= '`' . self::getTableAlias($x) . '`'  . '.' . $x['column'] . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         } else {
-                            $having_filter .= str_replace('{#}', '`'.self::getTableAlias($x).'`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                            $having_filter .= str_replace('{#}', '`' . self::getTableAlias($x) . '`' . '.' . $x['column'], $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
                         }
 
                         //$having_filter .= $x['table'].'.'.$x['column'].' in (\''.(implode($f['filter'], '\',\'')).'\')';
@@ -495,64 +495,65 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
         $from = array();
 
         if (App::configuration('report_statistics', 'use_file_columns_definition', '0') === '1') {
-        $tablesDefinition = self::getTablesDefinition();
+            $tablesDefinition = self::getTablesDefinition();
 
-        $tempDefinition = array();
-        for ($i = 0; $i < count($tablesDefinition); ++$i) {
-            if (isset($tables[strtolower($tablesDefinition[$i]['table'])])) {
-                if (isset($usedTables[strtolower($tablesDefinition[$i]['table'])])) {
-                    $tempDefinition[] = $tablesDefinition[$i];
-                }
-            }
-        }
-
-        $runs = 3;
-        while ($runs >= 0) {
-            $intermediaTables = array();
-            foreach ($tempDefinition as $definition) {
-                foreach ($definition['tables'] as $joinTable) {
-                    if ((!isset($tables[strtolower($joinTable['table'])]))) {
-                        $intermediaTables[strtolower($joinTable['table'])] = false;
+            $tempDefinition = array();
+            for ($i = 0; $i < count($tablesDefinition); ++$i) {
+                if (isset($tables[strtolower($tablesDefinition[$i]['table'])])) {
+                    if (isset($usedTables[strtolower($tablesDefinition[$i]['table'])])) {
+                        $tempDefinition[] = $tablesDefinition[$i];
                     }
                 }
             }
 
+            $runs = 3;
+            while ($runs >= 0) {
+                $intermediaTables = array();
+                foreach ($tempDefinition as $definition) {
+                    foreach ($definition['tables'] as $joinTable) {
+                        if ((!isset($tables[strtolower($joinTable['table'])]))) {
+                            $intermediaTables[strtolower($joinTable['table'])] = false;
+                        }
+                    }
+                }
+
+                for ($i = 0; $i < count($tablesDefinition); ++$i) {
+                    if (isset($intermediaTables[strtolower($tablesDefinition[$i]['table'])])) {
+                        $tempDefinition[] = $tablesDefinition[$i];
+                        $tables[strtolower($tablesDefinition[$i]['table'])] = true;
+                    }
+                }
+                //print_r($intermediaTables);
+                --$runs;
+            }
+
+            $tables[strtolower('blg_hdr_' . $tz)] = true;
+            $tempDefinition = array();
             for ($i = 0; $i < count($tablesDefinition); ++$i) {
-                if (isset($intermediaTables[strtolower($tablesDefinition[$i]['table'])])) {
+                if (isset($tables[strtolower($tablesDefinition[$i]['table'])])) {
                     $tempDefinition[] = $tablesDefinition[$i];
-                    $tables[strtolower($tablesDefinition[$i]['table'])] = true;
                 }
             }
-            //print_r($intermediaTables);
-            --$runs;
-        }
 
-        $tables[strtolower('blg_hdr_' . $tz)] = true;
-        $tempDefinition = array();
-        for ($i = 0; $i < count($tablesDefinition); ++$i) {
-            if (isset($tables[strtolower($tablesDefinition[$i]['table'])])) {
-                $tempDefinition[] = $tablesDefinition[$i];
+            foreach ($tablesDefinition as $definition) {
+                $on = array();
+                foreach ($definition['tables'] as $joinTable) {
+                    $on[] = $joinTable['on'];
+                }
+
+                $from[] = $definition['table'] . ((count($on) > 0) ? (' on ' . implode(' and ', $on)) : '');
             }
-        }
-
-        foreach ($tablesDefinition as $definition) {
-            $on = array();
-            foreach ($definition['tables'] as $joinTable) {
-                $on[] = $joinTable['on'];
-            }
-
-            $from[] = $definition['table'] . ((count($on) > 0) ? (' on ' . implode(' and ', $on)) : '');
-        }
-
-        }else if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
-            $from = [str_replace('from ', '', $db->singleValue('select from_fragment from view_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment')  )];
+        } else if (App::configuration('report_statistics', 'use_file_columns_definition', '0') !== '1') {
+            $from = [str_replace('from ', '', $db->singleValue('select from_fragment from view_readtable_report_statistics_from_fragment', ['tabellenzusatz' => $tz], 'from_fragment'))];
         }
 
         $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
+
+        App::result('config' . $tz, $config);
         $insert = 'insert into ' . $temporaryName . ' (datenbasis,erweiterte_datenbasis,' . implode(',', $ifields) . ') select \'Beleg\' datenbasis, concat(\'Beleg - \',\'' . $tz . '\') erweiterte_datenbasis,' . implode(',', $fields) . ' from ' . implode(' join ', $from) . ' ' . ' where ' . $having_filter;
         $insert = str_replace('{IDCOLUMN}', $config['bezug_id'], $insert);
         $insert = str_replace('{COSTCENTERCOLUMN}', $config['bezug_kst'], $insert);
-        
+
         $insert = str_replace('{DSTABELLE}', $config['adress_bezug'], $insert);
 
         // fix for not costcenter related tables
