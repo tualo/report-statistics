@@ -181,6 +181,14 @@ class Aggregate extends \Tualo\Office\Basic\RouteWrapper
     private static function columnExists($tablename, $columnname, $tz, $db)
     {
         $columnname = strtolower($columnname);
+
+
+        $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $tz]);
+        App::result('config' . $tz, $config);
+        $tablename = str_replace('{IDCOLUMN}', $config['bezug_id'], $tablename);
+        $tablename = str_replace('{COSTCENTERCOLUMN}', $config['bezug_kst'], $tablename);
+        $tablename = str_replace('{DSTABELLE}', $config['adress_bezug'], $tablename);
+
         $sql = "select count(1) c from ds_column where existsreal=1 and lower(table_name)=lower({table_name}) and column_name=lower({column_name})";
         $data = $db->singleValue($sql, [
             'table_name' => str_replace('{tabellenzusatz}', $tz, $tablename),
