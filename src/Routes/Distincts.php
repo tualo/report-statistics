@@ -34,6 +34,9 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
 
                 $sqls = [];
                 foreach ($columnsDefinition as  $column) {
+
+                    $x = Aggregate::findColumnsDefinition($columnsDefinition, $column['dataIndex']);
+
                     if (isset($input['dataIndex']) && ($input['dataIndex'] == $column['dataIndex'])) {
                         if (isset($column['filterList'])) {
                             $filterList = $column['filterList'];
@@ -41,7 +44,17 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
                             $sqls[] = $sql;
                         } else {
                             foreach ($input['reportTypes'] as $reportType) {
-                                $sql = "select '' treevalue, `" . $column['dataIndex'] . "` as value from " . str_replace('{tabellenzusatz}', $reportType, $column['table']) . " group by `" . $column['dataIndex'] . "` ";
+
+
+                                $v = '`' . $x['column'] . '`';
+                                if (!isset($x['func'])) {
+                                    $v = /*'`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`'  . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                                } else {
+                                    $v = str_replace('{#}', /* '`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`', $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                                }
+
+
+                                $sql = "select '' treevalue, " . $v . " as value from " . str_replace('{tabellenzusatz}', $reportType, $column['table']) . " group by `" . $column['dataIndex'] . "` ";
                                 $sqls[] = $sql;
                             }
                         }
