@@ -4,7 +4,7 @@ namespace Tualo\Office\ReportStatistics\Routes;
 
 use Tualo\Office\Basic\TualoApplication as App;
 use Tualo\Office\Basic\Route as BasicRoute;
-use Tualo\Office\ReportStatistics\Routes\;
+use Tualo\Office\ReportStatistics\Routes\Aggregate;
 
 class Distincts extends \Tualo\Office\Basic\RouteWrapper
 {
