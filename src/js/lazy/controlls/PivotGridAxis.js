@@ -161,7 +161,9 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.PivotGridAxis', {
         listeners: {
           scope: me,
           beforeQueryTableparts: function (queryObject) {
+            console.log('beforeQueryTableparts', queryObject);
             me.fireEvent('beforeQueryTableparts', queryObject);
+            console.log('beforeQueryTableparts', queryObject);
           }
         },
         // grid: grid,

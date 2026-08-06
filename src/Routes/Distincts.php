@@ -48,9 +48,9 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
 
                                 $v = '`' . $x['column'] . '`';
                                 if (!isset($x['func'])) {
-                                    $v = /*'`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`'  . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                                    $v = /*'`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`';
                                 } else {
-                                    $v = str_replace('{#}', /* '`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`', $x['func']) . ' in (\'' . (implode('\',\'', $f['filter'])) . '\')';
+                                    $v = str_replace('{#}', /* '`' . Aggregate::getTableAlias($x) . '`' . '.' . */ '`' . $x['column'] . '`', $x['func']);
                                 }
 
 

@@ -91,7 +91,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                 }
             });
         }
-    }, 
+    },
     onAxisChanged: function (grid, type) {
         this.aggregateData();
 
@@ -172,6 +172,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                                     this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'available');
                                 },
                                 beforeQueryTableparts: function (queryObject) {
+
                                     this.up('tualo-report-statistics-remote-pivotgrid').fireEvent('beforeQueryTableparts', queryObject);
                                 }
                             },
@@ -217,6 +218,10 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                                 changed: function (grid) {
                                     this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'columns');
                                 },
+                                beforeQueryTableparts: function (queryObject) {
+
+                                    this.up('tualo-report-statistics-remote-pivotgrid').fireEvent('beforeQueryTableparts', queryObject);
+                                }
                             },
                             store: {
 
@@ -251,6 +256,10 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                                 changed: function (grid) {
                                     this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'rows');
                                 },
+                                beforeQueryTableparts: function (queryObject) {
+
+                                    this.up('tualo-report-statistics-remote-pivotgrid').fireEvent('beforeQueryTableparts', queryObject);
+                                }
                             },
                             store: {
 
@@ -275,6 +284,10 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                                 changed: function (grid) {
                                     this.up('tualo-report-statistics-remote-pivotgrid').onAxisChanged(grid, 'values');
                                 },
+                                beforeQueryTableparts: function (queryObject) {
+
+                                    this.up('tualo-report-statistics-remote-pivotgrid').fireEvent('beforeQueryTableparts', queryObject);
+                                }
                             },
                             store: {
 
