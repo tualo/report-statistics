@@ -54,7 +54,30 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
                                 }
 
 
+                                $config = $db->singleRow('select * from blg_config where tabellenzusatz={tabellenzusatz}', ['tabellenzusatz' => $reportType]);
+
+                                App::result('config' . $reportType, $config);
+
                                 $sql = "select '' treevalue, " . $v . " as value from " . str_replace('{tabellenzusatz}', $reportType, $column['table']) . " group by `" . $column['dataIndex'] . "` ";
+
+
+                                $sql = str_replace('{IDCOLUMN}', $config['bezug_id'], $sql);
+                                $sql = str_replace('{COSTCENTERCOLUMN}', $config['bezug_kst'], $sql);
+
+                                $sql = str_replace('{DSTABELLE}', $config['adress_bezug'], $sql);
+
+                                // fix for not costcenter related tables
+                                // replace `tbl_<any>`.0 by 0, because some tables have no costcenter column and the join will fail
+                                $sql = preg_replace('/`tbl_[^`]+`\.0/', '0', $sql);
+
+                                $sql = str_replace('{BLGTABELLE}', $config['adress_bezug'], $sql);
+                                $sql = str_replace('{tabellenzusatz}', $reportType, $sql);
+                                $sql = str_replace('{bw}', $config['bw_faktor'], $sql);
+                                $sql = str_replace('{lf}', $config['lager_faktor'], $sql);
+                                $sql = str_replace('{tabellenzusatz_uc}', strtoupper($reportType), $sql);
+
+
+
                                 $sqls[] = $sql;
                             }
                         }
