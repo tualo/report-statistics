@@ -58,7 +58,7 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
 
                                 App::result('config' . $reportType, $config);
 
-                                $sql = "select '' treevalue, " . $v . " as value from " . str_replace('{tabellenzusatz}', $reportType, $column['table']) . " group by `" . $column['dataIndex'] . "` ";
+                                $sql = "select 'Wert' treevalue, " . $v . " as value from " . str_replace('{tabellenzusatz}', $reportType, $column['table']) . " group by value ";
 
 
                                 $sql = str_replace('{IDCOLUMN}', $config['bezug_id'], $sql);
