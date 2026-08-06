@@ -4,7 +4,7 @@ namespace Tualo\Office\ReportStatistics\Routes;
 
 use Tualo\Office\Basic\TualoApplication as App;
 use Tualo\Office\Basic\Route as BasicRoute;
-
+use Tualo\Office\ReportStatistics\Routes\;
 
 class Distincts extends \Tualo\Office\Basic\RouteWrapper
 {
@@ -15,6 +15,8 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
             try {
 
                 $db = App::get('session')->getDB();
+
+                /*
                 $json = file_get_contents(dirname(dirname(__FILE__)) . '/data/cnf/json/columns.json');
                 $json = str_replace("Ext.tualo.PivotGridFunctionCount", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionCount", $json);
                 $json = str_replace("Ext.tualo.PivotGridFunctionSum", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionSum", $json);
@@ -23,6 +25,8 @@ class Distincts extends \Tualo\Office\Basic\RouteWrapper
                 $json = str_replace("Ext.tualo.PivotGridFunctionAverage", "Tualo.reportStatistics.lazy.controlls.PivotGridFunctionAverage", $json);
 
                 $columnsDefinition = json_decode($json, true);
+                */
+                $columnsDefinition = Aggregate::getColumnsDefinition();
 
 
                 $input = json_decode(file_get_contents('php://input'), true);
