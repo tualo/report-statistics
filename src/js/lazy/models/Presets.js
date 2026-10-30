@@ -19,7 +19,8 @@ Ext.define('Tualo.reportStatistics.lazy.models.Presets', {
             data: [
                 { "id": "belegdatum", "name": "Belegdatum" },
                 { "id": "buchungsdatum", "name": "Buchungsdatum" },
-                { "id": "zeitraum_bis", "name": "Zeitraum bis" }
+                { "id": "zeitraum_bis", "name": "Zeitraum bis" },
+                { "id": "vdatum", "name": "Lieferdatum aus dem Beleg" }
             ]
         },
         reportTypes: {

@@ -28,6 +28,8 @@ Ext.define('Tualo.reportStatistics.lazy.models.PivotConfigurator', {
                 title += 'Buchungsdatum';
             } else if (datetype == 'zeitraum_bis') {
                 title += 'Zeitraum bis';
+            } else if (datetype == 'vdatum') {
+                title += 'Lieferdatum aus dem Beleg';
             }
             title += ': ';
             title += Ext.util.Format.date(startdate, 'd.m.Y');
