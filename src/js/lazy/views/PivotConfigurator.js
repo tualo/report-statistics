@@ -6,7 +6,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
         'Tualo.reportStatistics.lazy.controlls.RemotePivotGrid',
         'Tualo.reportStatistics.lazy.DateCalculator',
         'Tualo.reportStatistics.lazy.controlls.DateFormulaField',
-        'Ext.grid.plugin.Exporter'
+        // 'Ext.grid.plugin.Exporter'
     ],
 
     alias: 'widget.tualo-reportstatistics-pivotconfigurator',
@@ -129,6 +129,10 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
             record.commit();
         });
 
+        // filter auch zu available geben pivotGrid.setAxisData('available', preset.get('axis').available);
+
+        console.log('PivotConfigurator: Setting axis data for document ID:', pivotGrid);
+        pivotGrid.mergeFiltes('available', preset.get('axis').available);
         pivotGrid.setAxisData('rows', preset.get('axis').rows);
         pivotGrid.setAxisData('columns', preset.get('axis').columns);
         pivotGrid.setAxisData('values', preset.get('axis').values);

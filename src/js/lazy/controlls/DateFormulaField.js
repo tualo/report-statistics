@@ -141,7 +141,7 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.DateFormulaField', {
         var me = this;
         var childElCls = values.childElCls; // either '' or ' x-foo'
         var field = me.callParent(arguments);
-        var button = '<button id="' + me.id + '-triggerBtn"><i class="fa-solid fa-clipboard-prescription"></i></button>';
+        var button = '<button id="' + me.id + '-triggerBtn"><i class="fa-solid fa-clipboard"></i></button>';
         return [
             '<table width="100%" cellpadding="0" cellspacing="0">',
             '<tr>',

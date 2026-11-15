@@ -109,6 +109,25 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
             return rec.data;
         });
     },
+    mergeFiltes: function (axis, data) {
+        // Implement merging of filters here
+        var grid = this.down('#pivotgrid-configuration-axes-' + axis),
+            store = grid.getStore();
+
+        data.forEach(function (item) {
+            //findRecord ( fieldName, value, [startIndex], [anyMatch], [caseSensitive], [exactMatch] ) : Ext.data.Model 
+            if (!Ext.isEmpty(item.filter)) {
+                var record = store.findRecord('dataIndex', item.dataIndex, 0, false, false, true);
+                if (record) {
+                    record.set('filter', item.filter);
+                    record.commit();
+                }
+            }
+        });
+
+
+    },
+
     layout: 'border',
 
     items: [
@@ -123,10 +142,15 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
                     "dock": "bottom"
                 }
             ],
-            // forceFit: true,
-            plugins: {
-                gridexporter: true
-            },
+
+
+            plugins: [
+                {
+                    ptype: 'gridexporter'
+                }
+            ],
+
+
             bind: {
                 store: '{aggregate}',
             }
