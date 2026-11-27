@@ -132,7 +132,7 @@ Ext.define('Tualo.reportStatistics.lazy.views.PivotConfigurator', {
         // filter auch zu available geben pivotGrid.setAxisData('available', preset.get('axis').available);
 
         console.log('PivotConfigurator: Setting axis data for document ID:', pivotGrid);
-        pivotGrid.mergeFiltes('available', preset.get('axis').available);
+        pivotGrid.mergeFilters('available', preset.get('axis').available);
         pivotGrid.setAxisData('rows', preset.get('axis').rows);
         pivotGrid.setAxisData('columns', preset.get('axis').columns);
         pivotGrid.setAxisData('values', preset.get('axis').values);

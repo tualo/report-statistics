@@ -109,11 +109,13 @@ Ext.define('Tualo.reportStatistics.lazy.controlls.RemotePivotGrid', {
             return rec.data;
         });
     },
-    mergeFiltes: function (axis, data) {
+    mergeFilters: function (axis, data) {
         // Implement merging of filters here
         var grid = this.down('#pivotgrid-configuration-axes-' + axis),
             store = grid.getStore();
-
+        if (!data || !data.length) {
+            return;
+        }
         data.forEach(function (item) {
             //findRecord ( fieldName, value, [startIndex], [anyMatch], [caseSensitive], [exactMatch] ) : Ext.data.Model 
             if (!Ext.isEmpty(item.filter)) {
